@@ -21,17 +21,19 @@ import im.carrier.luke.governor.R;
 import im.carrier.luke.governor.server.Server;
 
 public class GovernorActivity extends Activity {
-    protected EditText device_wifi_address;
+    protected EditText governor_address;
     protected TextView device_wifi_status;
     protected Server   server;
+
+    protected static final int PORT = 8080;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_governor);
 
-        device_wifi_address = (EditText) findViewById(R.id.device_wifi_address);
-        device_wifi_status  = (TextView) findViewById(R.id.device_wifi_status);
+        governor_address   = (EditText) findViewById(R.id.governor_address);
+        device_wifi_status = (TextView) findViewById(R.id.device_wifi_status);
     }
 
     @Override
@@ -39,7 +41,7 @@ public class GovernorActivity extends Activity {
         super.onResume();
 
         try {
-            device_wifi_address.setText(getDeviceWifiAddress());
+            governor_address.setText("http://" + getDeviceWifiAddress() + ":" + Integer.toString(PORT));
             device_wifi_status.setVisibility(View.GONE);
         } catch (UnknownHostException e) {
             device_wifi_status.setText(R.string.device_wifi_address_error);
