@@ -1,1 +1,2 @@
-include ':app'
+include ':app', ':core'
+project(':core').projectDir = new File('deps/nanohttpd/core')
