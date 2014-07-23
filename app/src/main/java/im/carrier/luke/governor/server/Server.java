@@ -29,18 +29,18 @@ public class Server extends NanoHTTPD {
             try {
                 return respondWithStaticFile("htdocs/index.html");
             } catch (IOException e) {
-                return respondWithStatus(Response.Status.INTERNAL_ERROR);
+                return respond(Response.Status.INTERNAL_ERROR);
             }
         }
 
-        return respondWithStatus(Response.Status.NOT_FOUND);
+        return respond(Response.Status.NOT_FOUND);
     }
 
     protected Response respond(String content) {
         return new Response(content);
     }
 
-    protected Response respondWithStatus(Response.IStatus status) {
+    protected Response respond(Response.IStatus status) {
         return new Response(status, MIME_PLAINTEXT, "");
     }
 
