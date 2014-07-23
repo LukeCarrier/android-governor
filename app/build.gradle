@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "im.carrier.luke.governor"
         minSdkVersion 14
-        targetSdkVersion 'L'
+        targetSdkVersion 14
         versionCode 1
         versionName "1.0"
     }
