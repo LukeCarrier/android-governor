@@ -2,11 +2,9 @@ package im.carrier.luke.governor.server;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Properties;
 
 import fi.iki.elonen.NanoHTTPD;
 

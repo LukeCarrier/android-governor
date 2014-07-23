@@ -22,13 +22,11 @@ import im.carrier.luke.governor.R;
 import im.carrier.luke.governor.server.Server;
 
 public class GovernorActivity extends Activity {
+    protected static final int PORT = 8080;
     protected EditText governor_address;
     protected TextView device_wifi_status;
-
     protected Context appContext;
-    protected Server  server;
-
-    protected static final int PORT = 8080;
+    protected Server server;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +35,7 @@ public class GovernorActivity extends Activity {
 
         appContext = getApplicationContext();
 
-        governor_address   = (EditText) findViewById(R.id.governor_address);
+        governor_address = (EditText) findViewById(R.id.governor_address);
         device_wifi_status = (TextView) findViewById(R.id.device_wifi_status);
     }
 
@@ -57,7 +55,7 @@ public class GovernorActivity extends Activity {
         try {
             server = new Server(appContext, 8080);
             server.start();
-        } catch(IOException e) {
+        } catch (IOException e) {
             Log.e("im.carrier.luke.governor", "exception when launching NanoHttpd", e);
         }
     }
@@ -87,7 +85,7 @@ public class GovernorActivity extends Activity {
     }
 
     protected String getDeviceWifiAddress() throws UnknownHostException {
-        WifiManager wifiMgr  = (WifiManager) getSystemService(WIFI_SERVICE);
+        WifiManager wifiMgr = (WifiManager) getSystemService(WIFI_SERVICE);
         WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
         int ipAddress = wifiInfo.getIpAddress();
 

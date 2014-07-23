@@ -1,4 +1,2 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="im.carrier.luke.governor.activity.GovernorActivity" >
-</menu>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    tools:context="im.carrier.luke.governor.activity.GovernorActivity"></menu>
