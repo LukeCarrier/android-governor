@@ -1,6 +1,7 @@
 package im.carrier.luke.governor.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -23,7 +24,9 @@ import im.carrier.luke.governor.server.Server;
 public class GovernorActivity extends Activity {
     protected EditText governor_address;
     protected TextView device_wifi_status;
-    protected Server   server;
+
+    protected Context appContext;
+    protected Server  server;
 
     protected static final int PORT = 8080;
 
@@ -31,6 +34,8 @@ public class GovernorActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_governor);
+
+        appContext = getApplicationContext();
 
         governor_address   = (EditText) findViewById(R.id.governor_address);
         device_wifi_status = (TextView) findViewById(R.id.device_wifi_status);
@@ -41,6 +46,7 @@ public class GovernorActivity extends Activity {
         super.onResume();
 
         try {
+            // This will screw on IPv6 (need to enclose IP with [])
             governor_address.setText("http://" + getDeviceWifiAddress() + ":" + Integer.toString(PORT));
             device_wifi_status.setVisibility(View.GONE);
         } catch (UnknownHostException e) {
@@ -49,7 +55,7 @@ public class GovernorActivity extends Activity {
         }
 
         try {
-            server = new Server(8080);
+            server = new Server(appContext, 8080);
             server.start();
         } catch(IOException e) {
             Log.e("im.carrier.luke.governor", "exception when launching NanoHttpd", e);
