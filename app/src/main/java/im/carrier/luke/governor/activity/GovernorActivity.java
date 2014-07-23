@@ -4,22 +4,26 @@ import android.app.Activity;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteOrder;
 
 import im.carrier.luke.governor.R;
+import im.carrier.luke.governor.server.Server;
 
 public class GovernorActivity extends Activity {
     protected EditText device_wifi_address;
     protected TextView device_wifi_status;
+    protected Server   server;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,11 @@ public class GovernorActivity extends Activity {
 
         device_wifi_address = (EditText) findViewById(R.id.device_wifi_address);
         device_wifi_status  = (TextView) findViewById(R.id.device_wifi_status);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         try {
             device_wifi_address.setText(getDeviceWifiAddress());
@@ -36,8 +45,23 @@ public class GovernorActivity extends Activity {
             device_wifi_status.setText(R.string.device_wifi_address_error);
             device_wifi_status.setTextColor(getResources().getColor(R.color.error));
         }
+
+        try {
+            server = new Server(8080);
+            server.start();
+        } catch(IOException e) {
+            Log.e("im.carrier.luke.governor", "exception when launching NanoHttpd", e);
+        }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (server != null) {
+            server.stop();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
