@@ -2,8 +2,10 @@
 <resources>
 
     <string name="app_name">Governor</string>
-    <string name="title_activity_governor">GovernorActivity</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_desc">Governor allows you to manage your device remotely.</string>
+
+    <string name="title_activity_governor">Governor</string>
+    <string name="device_wifi_address_determining">Determining WiFi address...</string>
+    <string name="device_wifi_address_error">Failed to determine your device\'s WiFi network address. Are you connected to a WiFi network?</string>
 
 </resources>
