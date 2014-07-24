@@ -1,2 +1,2 @@
-include ':app', ':core'
-project(':core').projectDir = new File('deps/nanohttpd/core')
+include ':app', ':nanohttpd-core'
+project(':nanohttpd-core').projectDir = new File('deps/nanohttpd/core')
