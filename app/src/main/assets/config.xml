@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<governor-config>
+    <server>
+        <port>8080</port>
+    </server>
+
+    <assets>
+        <asset name="htdocs/index.html" path="/" />
+    </assets>
+
+    <controllers>
+        <controller name="System" path="/system">
+            <method name="getBuild" path="/build" verb="get" />
+        </controller>
+    </controllers>
+</governor-config>

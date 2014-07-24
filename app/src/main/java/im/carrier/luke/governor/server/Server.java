@@ -12,12 +12,14 @@ import fi.iki.elonen.NanoHTTPD;
  * Created by luke on 23/07/14.
  */
 public class Server extends NanoHTTPD {
+    protected Config config;
     protected Context context;
 
-    public Server(Context context, int port) throws IOException {
-        super(port);
+    public Server(Context context, Config config) throws IOException {
+        super(config.getPort());
 
         this.context = context;
+        this.config = config;
     }
 
     @Override

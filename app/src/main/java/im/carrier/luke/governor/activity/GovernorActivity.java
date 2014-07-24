@@ -12,13 +12,19 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.w3c.dom.Document;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteOrder;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import im.carrier.luke.governor.R;
+import im.carrier.luke.governor.server.Config;
 import im.carrier.luke.governor.server.Server;
 
 public class GovernorActivity extends Activity {
@@ -53,10 +59,18 @@ public class GovernorActivity extends Activity {
         }
 
         try {
-            server = new Server(appContext, 8080);
-            server.start();
-        } catch (IOException e) {
-            Log.e("im.carrier.luke.governor", "exception when launching NanoHttpd", e);
+            InputStream configStream = getAssets().open("config.xml");
+            Document configXml = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(configStream);
+            Config config = Config.fromXml(configXml);
+
+            try {
+                server = new Server(appContext, config);
+                server.start();
+            } catch (IOException e) {
+                Log.e("im.carrier.luke.governor", "exception when launching NanoHttpd", e);
+            }
+        } catch (Exception e) { // multi-catch only came in JRE 7 :(
+            Log.e("im.carrier.luke.governor", "exception when parsing configuration", e);
         }
     }
 
