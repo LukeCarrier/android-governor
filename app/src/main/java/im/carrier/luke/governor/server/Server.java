@@ -1,59 +1,38 @@
 package im.carrier.luke.governor.server;
 
 import android.content.Context;
-import android.content.res.AssetManager;
+import android.util.Log;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import fi.iki.elonen.NanoHTTPD;
+import im.carrier.luke.governor.config.Configuration;
+import im.carrier.luke.governor.config.Route;
 
 /**
  * Created by luke on 23/07/14.
  */
 public class Server extends NanoHTTPD {
-    protected Config config;
-    protected Context context;
+    protected Configuration config;
+    protected Context appContext;
 
-    public Server(Context context, Config config) throws IOException {
+    public Server(Context context, Configuration config) throws IOException {
         super(config.getPort());
 
-        this.context = context;
+        this.appContext = context;
         this.config = config;
     }
 
     @Override
     public Response serve(IHTTPSession session) {
-        String uri = session.getUri();
+        String path = session.getUri();
 
-        // Probably want a hash table here
-        if (uri.equals("/")) {
-            try {
-                return respondWithStaticFile("htdocs/index.html");
-            } catch (IOException e) {
-                return respond(Response.Status.INTERNAL_ERROR);
-            }
+        Route route;
+        try {
+            route = config.getRoute(path);
+            return route.getResponse(appContext, session);
+        } catch (IOException e) {
+            return new Response(Response.Status.NOT_FOUND, MIME_PLAINTEXT, "404 Not Found");
         }
-
-        return respond(Response.Status.NOT_FOUND);
-    }
-
-    protected Response respond(String content) {
-        return new Response(content);
-    }
-
-    protected Response respond(Response.IStatus status) {
-        return new Response(status, MIME_PLAINTEXT, "");
-    }
-
-    protected Response respondWithStaticFile(String filename) throws IOException {
-        AssetManager assetMgr = context.getAssets();
-
-        InputStream fileStream = assetMgr.open(filename);
-        byte[] fileBuffer = new byte[fileStream.available()];
-        fileStream.read(fileBuffer);
-        fileStream.close();
-
-        return respond(new String(fileBuffer));
     }
 }

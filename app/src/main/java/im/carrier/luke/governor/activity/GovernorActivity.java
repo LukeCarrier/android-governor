@@ -24,44 +24,82 @@ import java.nio.ByteOrder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import im.carrier.luke.governor.R;
-import im.carrier.luke.governor.server.Config;
+import im.carrier.luke.governor.config.Configuration;
 import im.carrier.luke.governor.server.Server;
 
+/**
+ * Governor activity.
+ *
+ * This is the entry point to the Android application.
+ */
 public class GovernorActivity extends Activity {
-    protected static final int PORT = 8080;
+    /**
+     * View element containing Governor's URL.
+     *
+     * We populate this element with the device's WiFi IP address and the server's port number when
+     * the application first starts.
+     */
     protected EditText governor_address;
+
+    /**
+     * View element containing the device's WiFi status.
+     *
+     * This element will be populated with explanatory text when we're trying to determine the
+     * device's WiFi state or have experienced issues doing so.
+     */
     protected TextView device_wifi_status;
+
+    /**
+     * Application appContext.
+     *
+     * We have to pass the application context to the server so that it's able to retrieve assets
+     * from our *.jar.
+     */
     protected Context appContext;
+
+    /**
+     * The NanoHttpd server.
+     *
+     * The HTTP server hosting the Governor application.
+     */
     protected Server server;
 
+    /**
+     * Prepare activity state on creation.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_governor);
 
         appContext = getApplicationContext();
-
         governor_address = (EditText) findViewById(R.id.governor_address);
         device_wifi_status = (TextView) findViewById(R.id.device_wifi_status);
     }
 
+    /**
+     * Prepare activity state on resume.
+     */
     @Override
     protected void onResume() {
         super.onResume();
 
         try {
-            // This will screw on IPv6 (need to enclose IP with [])
-            governor_address.setText("http://" + getDeviceWifiAddress() + ":" + Integer.toString(PORT));
-            device_wifi_status.setVisibility(View.GONE);
-        } catch (UnknownHostException e) {
-            device_wifi_status.setText(R.string.device_wifi_address_error);
-            device_wifi_status.setTextColor(getResources().getColor(R.color.error));
-        }
-
-        try {
             InputStream configStream = getAssets().open("config.xml");
             Document configXml = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(configStream);
-            Config config = Config.fromXml(configXml);
+            Configuration config = Configuration.fromXml(configXml);
+
+            try {
+                // This will screw on IPv6 (need to enclose IP with [])
+                governor_address.setText("http://" + getDeviceWifiAddress() + ":" + config.getPort());
+                device_wifi_status.setVisibility(View.GONE);
+            } catch (UnknownHostException e) {
+                device_wifi_status.setText(R.string.device_wifi_address_error);
+                device_wifi_status.setTextColor(getResources().getColor(R.color.error));
+            }
 
             try {
                 server = new Server(appContext, config);
@@ -74,6 +112,9 @@ public class GovernorActivity extends Activity {
         }
     }
 
+    /**
+     * Come on, we're going home.
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -83,21 +124,37 @@ public class GovernorActivity extends Activity {
         }
     }
 
+    /**
+     * Inflate options menu.
+     *
+     * @param menu The menu to insert our options into.
+     * @return Always true.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.governor, menu);
         return true;
     }
 
+    /**
+     * Handle action bar click.
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Get a human readable representation of the device's WiFi address.
+     *
+     * Exists mainly because Java is stupid and requires us to actually care about endianness.
+     *
+     * @return A human readable IP address.
+     * @throws UnknownHostException
+     */
     protected String getDeviceWifiAddress() throws UnknownHostException {
         WifiManager wifiMgr = (WifiManager) getSystemService(WIFI_SERVICE);
         WifiInfo wifiInfo = wifiMgr.getConnectionInfo();

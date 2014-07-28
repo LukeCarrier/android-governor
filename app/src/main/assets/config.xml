@@ -8,9 +8,12 @@
         <asset name="htdocs/index.html" path="/" />
     </assets>
 
-    <controllers>
-        <controller name="System" path="/system">
-            <method name="getBuild" path="/build" verb="get" />
-        </controller>
-    </controllers>
+    <routes>
+        <!-- Static assets for the user interface -->
+        <asset path="/"          file="/htdocs/index.html" />
+        <asset path="/style.css" file="/htdocs/style.css" />
+
+        <!-- SystemController route -->
+        <method path="/build" controller="System" method="getBuild" verb="get" />
+    </routes>
 </governor-config>
