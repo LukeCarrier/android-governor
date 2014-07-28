@@ -71,7 +71,8 @@ public class Configuration {
             Route route = null;
 
             if (routeNodeName.equals("asset")) {
-                route = new AssetRoute(routeNodeAttrs.getNamedItem("file").getNodeValue());
+                route = new AssetRoute(routeNodeAttrs.getNamedItem("file").getNodeValue(),
+                        routeNodeAttrs.getNamedItem("mimetype").getNodeValue());
             } else if (routeNodeName.equals("method")) {
                 route = new MethodRoute(routeNodeAttrs.getNamedItem("controller").getNodeValue(),
                                         routeNodeAttrs.getNamedItem("method").getNodeValue());

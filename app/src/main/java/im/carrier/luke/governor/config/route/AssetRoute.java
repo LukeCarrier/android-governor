@@ -19,12 +19,18 @@ public class AssetRoute implements Route {
     protected String file;
 
     /**
+     * MIME type.
+     */
+    protected String mimetype;
+
+    /**
      * Constructor.
      *
      * @param file The path to the file within the Android asset manager.
      */
-    public AssetRoute(String file) {
+    public AssetRoute(String file, String mimetype) {
         this.file = file;
+        this.mimetype = mimetype;
     }
 
     @Override
@@ -36,7 +42,8 @@ public class AssetRoute implements Route {
             byte[] fileBuffer = new byte[fileStream.available()];
             fileStream.read(fileBuffer);
             fileStream.close();
-            return new NanoHTTPD.Response(new String(fileBuffer));
+            return new NanoHTTPD.Response(NanoHTTPD.Response.Status.OK, mimetype,
+                    new String(fileBuffer));
         } catch (IOException e) {
             return new NanoHTTPD.Response(NanoHTTPD.Response.Status.NOT_FOUND,
                     NanoHTTPD.MIME_PLAINTEXT, "404 Not Found");

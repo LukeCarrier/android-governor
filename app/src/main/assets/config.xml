@@ -10,8 +10,8 @@
 
     <routes>
         <!-- Static assets for the user interface -->
-        <asset path="/"          file="/htdocs/index.html" />
-        <asset path="/style.css" file="/htdocs/style.css" />
+        <asset path="/"          file="/htdocs/index.html" mimetype="text/html" />
+        <asset path="/style.css" file="/htdocs/style.css"  mimetype="text/css" />
 
         <!-- SystemController route -->
         <method path="/build" controller="System" method="getBuild" verb="get" />
