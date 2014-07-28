@@ -68,7 +68,7 @@ public class Configuration {
             String routeNodeName = routeNode.getNodeName();
             String routePath = routeNodeAttrs.getNamedItem("path").getNodeValue();
 
-            Route route = null;
+            Route route;
 
             if (routeNodeName.equals("asset")) {
                 route = new AssetRoute(routeNodeAttrs.getNamedItem("file").getNodeValue(),
