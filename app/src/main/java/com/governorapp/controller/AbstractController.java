@@ -1,9 +1,9 @@
-package im.carrier.luke.governor.controller;
+package com.governorapp.controller;
 
 import com.google.gson.Gson;
 
 import fi.iki.elonen.NanoHTTPD;
-import im.carrier.luke.governor.server.ControllerResponse;
+import com.governorapp.server.ControllerResponse;
 
 /**
  * Abstract controller.

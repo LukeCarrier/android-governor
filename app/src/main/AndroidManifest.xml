@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="im.carrier.luke.governor">
+    package="com.governorapp">
 
     <!-- Getting the WiFi address -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.GovernorActivity"
+            android:name="com.governorapp.activity.GovernorActivity"
             android:label="@string/title_activity_governor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

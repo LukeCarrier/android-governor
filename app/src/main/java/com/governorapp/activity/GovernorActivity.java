@@ -1,4 +1,4 @@
-package im.carrier.luke.governor.activity;
+package com.governorapp.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -23,9 +23,9 @@ import java.nio.ByteOrder;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import im.carrier.luke.governor.R;
-import im.carrier.luke.governor.config.Configuration;
-import im.carrier.luke.governor.server.Server;
+import com.governorapp.R;
+import com.governorapp.config.Configuration;
+import com.governorapp.server.Server;
 
 /**
  * Governor activity.
@@ -105,10 +105,10 @@ public class GovernorActivity extends Activity {
                 server = new Server(appContext, config);
                 server.start();
             } catch (IOException e) {
-                Log.e("im.carrier.luke.governor", "exception when launching NanoHttpd", e);
+                Log.e("com.governorapp", "exception when launching NanoHttpd", e);
             }
         } catch (Exception e) { // multi-catch only came in JRE 7 :(
-            Log.e("im.carrier.luke.governor", "exception when parsing configuration", e);
+            Log.e("com.governorapp", "exception when parsing configuration", e);
         }
     }
 

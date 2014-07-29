@@ -1,4 +1,4 @@
-package im.carrier.luke.governor.config;
+package com.governorapp.config;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -14,8 +14,8 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import im.carrier.luke.governor.config.route.AssetRoute;
-import im.carrier.luke.governor.config.route.MethodRoute;
+import com.governorapp.config.route.AssetRoute;
+import com.governorapp.config.route.MethodRoute;
 
 /**
  * Root configuration node.

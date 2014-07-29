@@ -1,11 +1,11 @@
-package im.carrier.luke.governor.controller;
+package com.governorapp.controller;
 
 import android.os.Build;
 
 import java.util.HashMap;
 
 import fi.iki.elonen.NanoHTTPD;
-import im.carrier.luke.governor.server.Controller;
+import com.governorapp.server.Controller;
 
 /**
  * System controller.

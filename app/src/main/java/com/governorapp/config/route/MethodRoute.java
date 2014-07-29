@@ -1,12 +1,12 @@
-package im.carrier.luke.governor.config.route;
+package com.governorapp.config.route;
 
 import android.content.Context;
 
 import fi.iki.elonen.NanoHTTPD;
-import im.carrier.luke.governor.config.Route;
-import im.carrier.luke.governor.server.Controller;
-import im.carrier.luke.governor.server.ControllerClassObjectPair;
-import im.carrier.luke.governor.server.ControllerFactory;
+import com.governorapp.config.Route;
+import com.governorapp.server.Controller;
+import com.governorapp.server.ControllerClassObjectPair;
+import com.governorapp.server.ControllerFactory;
 
 /**
  * Dynamic method route.

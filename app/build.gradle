@@ -6,7 +6,7 @@ android {
     buildToolsVersion '20.0.0'
 
     defaultConfig {
-        applicationId "im.carrier.luke.governor"
+        applicationId "com.governorapp"
         minSdkVersion 14
         targetSdkVersion 14
         versionCode 1

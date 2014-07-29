@@ -1,4 +1,4 @@
-package im.carrier.luke.governor.server;
+package com.governorapp.server;
 
 /**
  * Controller factory.
@@ -7,7 +7,7 @@ public class ControllerFactory {
     /**
      * Class name format string.
      */
-    public static final String CLASS_FORMAT = "im.carrier.luke.governor.controller.%sController";
+    public static final String CLASS_FORMAT = "com.governorapp.controller.%sController";
 
     /**
      * Singleton instance.

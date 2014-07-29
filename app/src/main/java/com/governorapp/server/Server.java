@@ -1,12 +1,12 @@
-package im.carrier.luke.governor.server;
+package com.governorapp.server;
 
 import android.content.Context;
 
 import java.io.IOException;
 
 import fi.iki.elonen.NanoHTTPD;
-import im.carrier.luke.governor.config.Configuration;
-import im.carrier.luke.governor.config.Route;
+import com.governorapp.config.Configuration;
+import com.governorapp.config.Route;
 
 /**
  * Created by luke on 23/07/14.

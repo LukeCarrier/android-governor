@@ -1,4 +1,4 @@
-package im.carrier.luke.governor.config;
+package com.governorapp.config;
 
 import android.content.Context;
 

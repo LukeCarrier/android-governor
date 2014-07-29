@@ -1,4 +1,4 @@
-package im.carrier.luke.governor;
+package com.governorapp;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

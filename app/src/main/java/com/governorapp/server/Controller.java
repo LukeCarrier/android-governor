@@ -1,4 +1,4 @@
-package im.carrier.luke.governor.server;
+package com.governorapp.server;
 
 /**
  * Controller interface.

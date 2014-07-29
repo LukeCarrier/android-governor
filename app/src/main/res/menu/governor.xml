@@ -1,2 +1,2 @@
 <menu xmlns:tools="http://schemas.android.com/tools"
-    tools:context="im.carrier.luke.governor.activity.GovernorActivity"></menu>
+    tools:context="com.governorapp.activity.GovernorActivity"></menu>
