@@ -45,7 +45,6 @@ of this functionality, though:
         * Reject/dismiss incoming phone calls with a message
     * System management
         * View resource usage
-        * Access device information
 
 Thanks
 ------
