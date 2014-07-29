@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'maven'
 
 android {
     compileSdkVersion 19
@@ -23,7 +24,13 @@ android {
     }
 }
 
+
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':nanohttpd-core')
+    compile 'com.google.code.gson:gson:2.2.+'
 }
