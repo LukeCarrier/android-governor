@@ -1,7 +1,5 @@
 package im.carrier.luke.governor.config;
 
-import android.util.Log;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -30,7 +28,7 @@ public class Configuration {
 
     /**
      * Server's port number.
-     *
+     * <p/>
      * The port number must be above 1024, as we won't run as a privileged application.
      */
     protected int port;
@@ -48,7 +46,7 @@ public class Configuration {
      * @param xml The XML Document object to parse values from.
      * @return A populated configuration object.
      * @throws XPathExpressionException When the configuration file is invalid (e.g. missing
-     *         required nodes).
+     *                                  required nodes).
      */
     public static Configuration fromXml(Document xml) throws XPathExpressionException {
         xml.getDocumentElement().normalize();
@@ -62,7 +60,7 @@ public class Configuration {
 
         NodeList routes = (NodeList) xPath.evaluate("/governor-config/routes/*[self::asset or self::method]",
                 xml, XPathConstants.NODESET);
-        for (int i=0; i<routes.getLength(); i++) {
+        for (int i = 0; i < routes.getLength(); i++) {
             Node routeNode = routes.item(i);
             NamedNodeMap routeNodeAttrs = routeNode.getAttributes();
             String routeNodeName = routeNode.getNodeName();
@@ -75,7 +73,8 @@ public class Configuration {
                         routeNodeAttrs.getNamedItem("mimetype").getNodeValue());
             } else if (routeNodeName.equals("method")) {
                 route = new MethodRoute(routeNodeAttrs.getNamedItem("controller").getNodeValue(),
-                                        routeNodeAttrs.getNamedItem("method").getNodeValue());
+                        routeNodeAttrs.getNamedItem("method").getNodeValue(),
+                        routeNodeAttrs.getNamedItem("verb").getNodeValue());
             } else {
                 throw new InputMismatchException();
             }
@@ -89,7 +88,7 @@ public class Configuration {
     /**
      * Add a route.
      *
-     * @param path The path to respond to.
+     * @param path  The path to respond to.
      * @param route The route to respond with.
      */
     public void addRoute(String path, Route route) {

@@ -10,10 +10,10 @@
 
     <routes>
         <!-- Static assets for the user interface -->
-        <asset path="/"          file="/htdocs/index.html" mimetype="text/html" />
-        <asset path="/style.css" file="/htdocs/style.css"  mimetype="text/css" />
+        <asset file="/htdocs/index.html" mimetype="text/html" path="/" />
+        <asset file="/htdocs/style.css" mimetype="text/css" path="/style.css" />
 
         <!-- SystemController route -->
-        <method path="/build" controller="System" method="getBuild" verb="get" />
+        <method controller="System" method="getBuild" path="/system/build" verb="get" />
     </routes>
 </governor-config>

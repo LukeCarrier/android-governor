@@ -29,13 +29,13 @@ import im.carrier.luke.governor.server.Server;
 
 /**
  * Governor activity.
- *
+ * <p/>
  * This is the entry point to the Android application.
  */
 public class GovernorActivity extends Activity {
     /**
      * View element containing Governor's URL.
-     *
+     * <p/>
      * We populate this element with the device's WiFi IP address and the server's port number when
      * the application first starts.
      */
@@ -43,7 +43,7 @@ public class GovernorActivity extends Activity {
 
     /**
      * View element containing the device's WiFi status.
-     *
+     * <p/>
      * This element will be populated with explanatory text when we're trying to determine the
      * device's WiFi state or have experienced issues doing so.
      */
@@ -51,7 +51,7 @@ public class GovernorActivity extends Activity {
 
     /**
      * Application appContext.
-     *
+     * <p/>
      * We have to pass the application context to the server so that it's able to retrieve assets
      * from our *.jar.
      */
@@ -59,7 +59,7 @@ public class GovernorActivity extends Activity {
 
     /**
      * The NanoHttpd server.
-     *
+     * <p/>
      * The HTTP server hosting the Governor application.
      */
     protected Server server;
@@ -149,7 +149,7 @@ public class GovernorActivity extends Activity {
 
     /**
      * Get a human readable representation of the device's WiFi address.
-     *
+     * <p/>
      * Exists mainly because Java is stupid and requires us to actually care about endianness.
      *
      * @return A human readable IP address.

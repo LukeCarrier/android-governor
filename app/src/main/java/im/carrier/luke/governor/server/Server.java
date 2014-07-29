@@ -1,7 +1,6 @@
 package im.carrier.luke.governor.server;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.io.IOException;
 
