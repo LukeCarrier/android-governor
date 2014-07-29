@@ -4,6 +4,7 @@ import android.content.Context;
 
 import fi.iki.elonen.NanoHTTPD;
 import im.carrier.luke.governor.config.Route;
+import im.carrier.luke.governor.server.Controller;
 import im.carrier.luke.governor.server.ControllerClassObjectPair;
 import im.carrier.luke.governor.server.ControllerFactory;
 
@@ -43,7 +44,10 @@ public class MethodRoute implements Route {
         try {
             ControllerClassObjectPair controllerPair = ControllerFactory.getInstance().getController(controller);
 
-            return (NanoHTTPD.Response) controllerPair.getCls().getMethod(method).invoke(controllerPair.getController());
+            Class<?> controllerClass = controllerPair.getCls();
+            Controller controller = controllerPair.getController();
+
+            return (NanoHTTPD.Response) controllerClass.getMethod(method).invoke(controller);
         } catch (Exception e) {
             return new NanoHTTPD.Response(NanoHTTPD.Response.Status.INTERNAL_ERROR,
                     NanoHTTPD.MIME_PLAINTEXT, "500 Internal Error");
