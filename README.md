@@ -52,6 +52,7 @@ Thanks
 Governor would not be possible were it not for the following excellent open
 source projects:
 
-* [NanoHttpd](https://github.com/NanoHttpd/nanohttpd) - the tiny, embeddable
-  Java HTTP server
+* [Google Gson](https://code.google.com/p/google-gson/) - a library for converting Java Objects into
+  their JSON representation
+* [NanoHttpd](https://github.com/NanoHttpd/nanohttpd) - the tiny, embeddable Java HTTP server
 
