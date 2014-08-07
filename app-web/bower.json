@@ -1,0 +1,21 @@
+{
+    "name": "governor-web",
+    "description": "Governor's web interface",
+    "version": "0.1.0",
+
+    "homepage": "http://governorapp.com/",
+    "repository": "https://github.com/LukeCarrier/android-governor",
+
+    "private": true,
+
+    "author": {
+        "name": "Luke Carrier",
+        "email": "luke@carrier.im"
+    },
+
+    "dependencies": {
+        "bootstrap": "~3.2",
+        "html5shiv": "~3.7",
+        "respond": "~1.4"
+    }
+}

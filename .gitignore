@@ -1,6 +1,18 @@
+# Gradle temporary files
 .gradle
+
+# IDEA stuff
 /local.properties
 /.idea/workspace.xml
 /app/app.iml
-.DS_Store
+
+# Sublime stuff
+/*.sublime-*
+
+# Built files
 /build
+
+# Web UI built files
+/app-web/bower_components
+/app-web/node_modules
+/app-web/build
