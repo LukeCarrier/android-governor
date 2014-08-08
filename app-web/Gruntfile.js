@@ -17,15 +17,7 @@ module.exports = function(grunt) {
                 options: {
                     paths: ['less']
                 },
-                files: {
-                    "build/style.css": "less/style.less"
-                }
-            },
-            production: {
-                options: {
-                    cleancss: true,
-                    paths: ['less']
-                },
+
                 files: {
                     "build/style.css": "less/style.less"
                 }
@@ -33,12 +25,13 @@ module.exports = function(grunt) {
         },
 
         watch: {
-            less: {
-                files: ['less/*.less']
-            },
-
             options: {
                 livereload: true
+            },
+
+            less: {
+                files: ['less/*.less'],
+                tasks: ['less']
             }
         }
     });
