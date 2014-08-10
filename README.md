@@ -21,10 +21,16 @@ browsers.
 The web interface is easy to build:
 
     $ cd app-web
-    $ npm install -g bower grunt-cli # you may need sudo here
+    $ npm install -g bower gulp # you may need sudo here
     $ npm install
     $ bower install
-    $ grunt
+    $ gulp
+
+You can also watch the web UI for changes, optionally using LiveReload to save
+time when tweaking the UI:
+
+    $ cd app-web
+    $ gulp watch --live-reload
 
 To do
 -----
