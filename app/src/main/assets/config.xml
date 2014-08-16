@@ -4,10 +4,6 @@
         <port>8080</port>
     </server>
 
-    <assets>
-        <asset name="htdocs/index.html" path="/" />
-    </assets>
-
     <routes>
         <!-- Static assets for the user interface -->
         <asset file="/htdocs/index.html" mimetype="text/html" path="/" />
