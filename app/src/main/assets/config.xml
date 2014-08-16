@@ -11,7 +11,11 @@
     <routes>
         <!-- Static assets for the user interface -->
         <asset file="/htdocs/index.html" mimetype="text/html" path="/" />
-        <asset file="/htdocs/style.css" mimetype="text/css" path="/style.css" />
+        <asset file="/htdocs/css/all.min.css" mimetype="text/css" path="/css/all.min.css" />
+        <asset file="/htdocs/js/all.min.js" mimetype="text/css" path="/js/all.min.js" />
+        <asset file="/htdocs/js/all.min.js.map" mimetype="text/css" path="/js/all.min.js.map" />
+        <asset file="/htdocs/js/ie.min.js" mimetype="text/css" path="/js/ie.min.js" />
+        <asset file="/htdocs/js/ie.min.js.map" mimetype="text/css" path="/js/ie.min.js.map" />
 
         <!-- SystemController route -->
         <method controller="System" method="getBuild" path="/system/build" verb="get" />
