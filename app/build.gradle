@@ -18,10 +18,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    sourceSets {
-        main.java.srcDirs += 'deps/nanohttpd/core'
-    }
 }
 
 
@@ -31,6 +27,7 @@ repositories {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':app-web')
     compile project(':nanohttpd-core')
     compile 'com.google.code.gson:gson:2.2.+'
 }
