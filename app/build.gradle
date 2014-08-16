@@ -20,7 +20,6 @@ android {
     }
 }
 
-
 repositories {
     mavenCentral()
 }
@@ -31,3 +30,19 @@ dependencies {
     compile project(':nanohttpd-core')
     compile 'com.google.code.gson:gson:2.2.+'
 }
+
+task cleanHtdocs(type: Delete) {
+    delete file("src/main/assets/htdocs")
+}
+
+task copyHtdocs(type: Copy) {
+    from zipTree("../app-web/build/libs/governor-web-0.1.0.jar")
+    into file("src/main/assets/htdocs")
+}
+
+task removeHtdocsManifest(type: Delete, dependsOn: copyHtdocs) {
+    delete file("src/main/assets/htdocs/META-INF")
+}
+
+clean.dependsOn(cleanHtdocs)
+assemble.dependsOn(removeHtdocsManifest)

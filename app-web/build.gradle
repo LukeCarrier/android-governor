@@ -18,4 +18,5 @@ jar {
     from "${projectDir}/out"
 }
 
+clean.dependsOn(gulp_clean)
 jar.dependsOn(gulp_default)
