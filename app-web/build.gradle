@@ -9,3 +9,13 @@ buildscript {
 }
 
 apply plugin: 'gulp'
+apply plugin: 'java'
+
+jar {
+    baseName = 'governor-web'
+    version = '0.1.0'
+
+    from "${projectDir}/out"
+}
+
+jar.dependsOn(gulp_default)

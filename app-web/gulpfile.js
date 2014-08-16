@@ -14,7 +14,7 @@ var useLiveReload = !!util.env['live-reload'];
 
 var paths = {
     html:      'html/*.html',
-    builtHtml: 'build',
+    builtHtml: 'out',
 
     script:               [
         'bower_components/jquery/dist/jquery.js',
@@ -25,24 +25,24 @@ var paths = {
         'bower_components/html5shiv/dist/html5shiv.js',
         'bower_components/respond/dest/respond.src.js'
     ],
-    builtScript:          'build/js',
+    builtScript:          'out/js',
     builtScriptAll:       'all.min.js',
     builtScriptIe:        'ie.min.js',
     builtScriptSourcemap: '.',
 
     style:               'less/*.less',
-    builtStyle:          'build/css',
+    builtStyle:          'out/css',
     builtStyleAll:       'all.min.css',
     builtStyleSourcemap: '.',
 
-    builtLiveReload: 'build/**/*'
+    builtLiveReload: 'out/**/*'
 };
 
 /*
  * Clean up the build directory
  */
 gulp.task('clean', function(cb) {
-    del('build', cb);
+    del('out', cb);
 });
 
 /*
