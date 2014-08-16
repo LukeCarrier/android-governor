@@ -17,3 +17,4 @@
 /app-web/node_modules
 /app-web/build
 /app-web/out
+/app/src/main/assets/htdocs
