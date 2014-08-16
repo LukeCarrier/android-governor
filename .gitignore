@@ -3,8 +3,8 @@
 
 # IDEA stuff
 /local.properties
-/.idea/workspace.xml
-/app/app.iml
+/.idea/
+*.iml
 
 # Sublime stuff
 /*.sublime-*
