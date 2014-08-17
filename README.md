@@ -18,12 +18,21 @@ device, which also hosts the dynamic controllers responsible for generating
 response data, and the web user interface which the server delivers to
 browsers.
 
-The web interface is easy to build:
+The application can be built easily -- just run the Gradle wrapper script:
+
+    $ ./gradlew
+
+The web interface is easy to build independently of the overall application --
+the dependencies can be fetched like so:
 
     $ cd app-web
     $ npm install -g bower gulp # you may need sudo here
     $ npm install
     $ bower install
+
+And subsequent builds are just a call to Gulp away:
+
+    $ cd app-web
     $ gulp
 
 You can also watch the web UI for changes, optionally using LiveReload to save
