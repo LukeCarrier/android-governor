@@ -5,6 +5,8 @@ import android.os.Build;
 import java.util.HashMap;
 
 import fi.iki.elonen.NanoHTTPD;
+
+import com.governorapp.config.Configuration;
 import com.governorapp.server.Controller;
 
 /**
@@ -13,6 +15,15 @@ import com.governorapp.server.Controller;
  * Provides system information.
  */
 public class SystemController extends AbstractController implements Controller {
+    /**
+     * Constructor.
+     *
+     * @param config
+     */
+    public SystemController(Configuration config) {
+        super(config);
+    }
+
     public NanoHTTPD.Response getBuild() throws NoSuchFieldException, IllegalAccessException {
         HashMap<String, String> buildInfo = new HashMap<String, String>();
         String[] buildInfoKeys = {"BOARD", "BOOTLOADER", "BRAND", "CPU_ABI", "CPU_ABI2", "DEVICE",

@@ -3,12 +3,28 @@ package com.governorapp.controller;
 import com.google.gson.Gson;
 
 import fi.iki.elonen.NanoHTTPD;
+
+import com.governorapp.config.Configuration;
 import com.governorapp.server.ControllerResponse;
 
 /**
  * Abstract controller.
  */
 public class AbstractController {
+    /**
+     * Server configuration.
+     */
+    protected Configuration config;
+
+    /**
+     * Constructor.
+     *
+     * @param config Governor server configuration.
+     */
+    public AbstractController(Configuration config) {
+        this.config = config;
+    }
+
     /**
      * Return a successful response with data, but no errors.
      *

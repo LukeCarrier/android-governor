@@ -3,6 +3,8 @@ package com.governorapp.config.route;
 import android.content.Context;
 
 import fi.iki.elonen.NanoHTTPD;
+
+import com.governorapp.config.Configuration;
 import com.governorapp.config.Route;
 import com.governorapp.server.Controller;
 import com.governorapp.server.ControllerClassObjectPair;
@@ -40,9 +42,9 @@ public class MethodRoute implements Route {
     }
 
     @Override
-    public NanoHTTPD.Response getResponse(Context appContext, NanoHTTPD.IHTTPSession session) {
+    public NanoHTTPD.Response getResponse(Context appContext, Configuration config, NanoHTTPD.IHTTPSession session) {
         try {
-            ControllerClassObjectPair controllerPair = ControllerFactory.getInstance().getController(controller);
+            ControllerClassObjectPair controllerPair = ControllerFactory.getInstance().getController(controller, config);
 
             Class<?> controllerClass = controllerPair.getCls();
             Controller controller = controllerPair.getController();

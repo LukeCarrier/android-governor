@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import fi.iki.elonen.NanoHTTPD;
+
+import com.governorapp.config.Configuration;
 import com.governorapp.config.Route;
 
 /**
@@ -34,7 +36,7 @@ public class AssetRoute implements Route {
     }
 
     @Override
-    public NanoHTTPD.Response getResponse(Context appContext, NanoHTTPD.IHTTPSession session) {
+    public NanoHTTPD.Response getResponse(Context appContext, Configuration config, NanoHTTPD.IHTTPSession session) {
         AssetManager assetMgr = appContext.getAssets();
 
         try {

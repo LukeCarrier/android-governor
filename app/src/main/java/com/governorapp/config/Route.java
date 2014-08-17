@@ -14,5 +14,5 @@ public interface Route {
      * @param session The HTTP session containing the request.
      * @return The HTTP response object.
      */
-    public NanoHTTPD.Response getResponse(Context appContext, NanoHTTPD.IHTTPSession session);
+    public NanoHTTPD.Response getResponse(Context appContext, Configuration config, NanoHTTPD.IHTTPSession session);
 }

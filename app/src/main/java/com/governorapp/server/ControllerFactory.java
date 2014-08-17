@@ -1,5 +1,9 @@
 package com.governorapp.server;
 
+import com.governorapp.config.Configuration;
+
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * Controller factory.
  */
@@ -36,12 +40,16 @@ public class ControllerFactory {
      * @throws IllegalAccessException
      * @throws InstantiationException
      */
-    public ControllerClassObjectPair getController(String name)
-            throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public ControllerClassObjectPair getController(String name, Configuration config)
+            throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException,
+            InvocationTargetException, InstantiationException {
         String clsName = String.format(CLASS_FORMAT, name);
 
         Class<?> cls = Class.forName(clsName);
 
-        return new ControllerClassObjectPair(cls, (Controller) cls.newInstance());
+        Class[] prototype = new Class[1];
+        prototype[0] = Configuration.class;
+
+        return new ControllerClassObjectPair(cls, (Controller) cls.getDeclaredConstructor(prototype).newInstance(config));
     }
 }
