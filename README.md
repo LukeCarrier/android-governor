@@ -46,7 +46,7 @@ independently of the device hosting the Governor controllers. To achieve this,
 you need to configure a filter on all jQuery AJAX requests like so:
 
     $.ajaxPrefilter(function(options, originalOptions, jqXhr) {
-        options.url = 'http://192.168.1.138:8080';
+        options.url = 'http://192.168.1.138:8080' + options.url;
     });
 
 Pop the above into ```app-web/script/lib/local.js```, save and allow gulp to
