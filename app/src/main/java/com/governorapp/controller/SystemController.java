@@ -24,6 +24,13 @@ public class SystemController extends AbstractController implements Controller {
         super(config);
     }
 
+    /**
+     * Get device hardware and software build information.
+     *
+     * @return Device hardware and software build information from os.Build.
+     * @throws NoSuchFieldException
+     * @throws IllegalAccessException
+     */
     public NanoHTTPD.Response getBuild() throws NoSuchFieldException, IllegalAccessException {
         HashMap<String, String> buildInfo = new HashMap<String, String>();
         String[] buildInfoKeys = {"BOARD", "BOOTLOADER", "BRAND", "CPU_ABI", "CPU_ABI2", "DEVICE",
