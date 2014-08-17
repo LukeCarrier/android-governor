@@ -12,6 +12,9 @@
 # Built files
 /build
 
+# Web UI configuration
+/app-web/script/lib/local.js
+
 # Web UI built files
 /app-web/bower_components
 /app-web/node_modules

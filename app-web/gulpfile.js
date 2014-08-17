@@ -19,7 +19,11 @@ var paths = {
     script:               [
         'bower_components/jquery/dist/jquery.js',
         'bower_components/bootstrap/dist/js/bootstrap.js',
-        'script/*.js'
+        'bower_components/underscore/underscore.js',
+        'bower_components/backbone/backbone.js',
+        'script/lib/*.js',
+        'script/routes/*.js',
+        'script/init.js'
     ],
     scriptIe:             [
         'bower_components/html5shiv/dist/html5shiv.js',

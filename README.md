@@ -41,6 +41,17 @@ time when tweaking the UI:
     $ cd app-web
     $ gulp watch --live-reload
 
+To further speed up frontend development, the UI can be tested on a server
+independently of the device hosting the Governor controllers. To achieve this,
+you need to configure a filter on all jQuery AJAX requests like so:
+
+    $.ajaxPrefilter(function(options, originalOptions, jqXhr) {
+        options.url = 'http://192.168.1.138:8080';
+    });
+
+Pop the above into ```app-web/script/lib/local.js```, save and allow gulp to
+rebuild all the assets.
+
 To do
 -----
 
@@ -86,4 +97,3 @@ source projects:
 * [Google Gson](https://code.google.com/p/google-gson/) - a library for converting Java Objects into
   their JSON representation
 * [NanoHttpd](https://github.com/NanoHttpd/nanohttpd) - the tiny, embeddable Java HTTP server
-
