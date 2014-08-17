@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -89,9 +90,13 @@ public class GovernorActivity extends Activity {
         super.onResume();
 
         try {
+            Configuration config = new Configuration();
+
+            config.loadPreferences(PreferenceManager.getDefaultSharedPreferences(this));
+
             InputStream configStream = getAssets().open("config.xml");
             Document configXml = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(configStream);
-            Configuration config = Configuration.fromXml(configXml);
+            config.loadXml(configXml);
 
             try {
                 // This will screw on IPv6 (need to enclose IP with [])

@@ -9,7 +9,7 @@ import com.governorapp.config.Configuration;
 import com.governorapp.config.Route;
 
 /**
- * Created by luke on 23/07/14.
+ * Governor HTTP server.
  */
 public class Server extends NanoHTTPD {
     protected Configuration config;
@@ -25,13 +25,21 @@ public class Server extends NanoHTTPD {
     @Override
     public Response serve(IHTTPSession session) {
         String path = session.getUri();
+        Response response;
 
-        Route route;
         try {
-            route = config.getRoute(path);
-            return route.getResponse(appContext, session);
+            Route route = config.getRoute(path);
+            response = route.getResponse(appContext, session);
         } catch (IOException e) {
-            return new Response(Response.Status.NOT_FOUND, MIME_PLAINTEXT, "404 Not Found");
+            response = new Response(Response.Status.NOT_FOUND, MIME_PLAINTEXT, "404 Not Found");
         }
+
+        if (config.getEnableCors()) {
+            response.addHeader("Access-Control-Allow-Methods", "DELETE, GET, POST, PUT");
+            response.addHeader("Access-Control-Allow-Origin",  "*");
+            response.addHeader("Access-Control-Allow-Headers", "X-Requested-With");
+        }
+
+        return response;
     }
 }

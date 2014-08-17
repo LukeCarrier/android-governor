@@ -1,5 +1,8 @@
 package com.governorapp.config;
 
+import android.content.SharedPreferences;
+import android.util.Log;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -27,6 +30,14 @@ public class Configuration {
     protected HashMap<String, Route> routingTable;
 
     /**
+     * The enabled state of CORS.
+     *
+     * If enabled, CORS will cause a header containing "access-control-allow-origin: *" to be sent
+     * with responses.
+     */
+    protected boolean enable_cors;
+
+    /**
      * Server's port number.
      * <p/>
      * The port number must be above 1024, as we won't run as a privileged application.
@@ -41,51 +52,6 @@ public class Configuration {
     }
 
     /**
-     * Create a configuration object from an XML document.
-     *
-     * @param xml The XML Document object to parse values from.
-     * @return A populated configuration object.
-     * @throws XPathExpressionException When the configuration file is invalid (e.g. missing
-     *                                  required nodes).
-     */
-    public static Configuration fromXml(Document xml) throws XPathExpressionException {
-        xml.getDocumentElement().normalize();
-
-        XPath xPath = XPathFactory.newInstance().newXPath();
-        Configuration config = new Configuration();
-
-        NodeList portNodes = (NodeList) xPath.evaluate("/governor-config/server/port", xml,
-                XPathConstants.NODESET);
-        config.setPort(Integer.parseInt(portNodes.item(0).getTextContent()));
-
-        NodeList routes = (NodeList) xPath.evaluate("/governor-config/routes/*[self::asset or self::method]",
-                xml, XPathConstants.NODESET);
-        for (int i = 0; i < routes.getLength(); i++) {
-            Node routeNode = routes.item(i);
-            NamedNodeMap routeNodeAttrs = routeNode.getAttributes();
-            String routeNodeName = routeNode.getNodeName();
-            String routePath = routeNodeAttrs.getNamedItem("path").getNodeValue();
-
-            Route route;
-
-            if (routeNodeName.equals("asset")) {
-                route = new AssetRoute(routeNodeAttrs.getNamedItem("file").getNodeValue(),
-                        routeNodeAttrs.getNamedItem("mimetype").getNodeValue());
-            } else if (routeNodeName.equals("method")) {
-                route = new MethodRoute(routeNodeAttrs.getNamedItem("controller").getNodeValue(),
-                        routeNodeAttrs.getNamedItem("method").getNodeValue(),
-                        routeNodeAttrs.getNamedItem("verb").getNodeValue());
-            } else {
-                throw new InputMismatchException();
-            }
-
-            config.addRoute(routePath, route);
-        }
-
-        return config;
-    }
-
-    /**
      * Add a route.
      *
      * @param path  The path to respond to.
@@ -94,6 +60,13 @@ public class Configuration {
     public void addRoute(String path, Route route) {
         this.routingTable.put(path, route);
     }
+
+    /**
+     * Get the enabled status of CORS.
+     *
+     * @return The enabled status of CORS.
+     */
+    public boolean getEnableCors() { return enable_cors; }
 
     /**
      * Get the route for a given path.
@@ -121,7 +94,69 @@ public class Configuration {
     }
 
     /**
+     * Load preferences from the Android SharedPreferences API.
+     *
+     * @param preferences The preferences object.
+     */
+    public void loadPreferences(SharedPreferences preferences) {
+        setEnableCors(preferences.getBoolean("pref_key_cors", false));
+    }
+
+    /**
+     * Create a configuration object from an XML document.
+     *
+     * @param xml The XML Document object to parse values from.
+     * @return A populated configuration object.
+     * @throws XPathExpressionException When the configuration file is invalid (e.g. missing
+     *                                  required nodes).
+     */
+    public void loadXml(Document xml) throws XPathExpressionException {
+        xml.getDocumentElement().normalize();
+
+        XPath xPath = XPathFactory.newInstance().newXPath();
+
+        NodeList portNodes = (NodeList) xPath.evaluate("/governor-config/server/port", xml,
+                XPathConstants.NODESET);
+        setPort(Integer.parseInt(portNodes.item(0).getTextContent()));
+
+        NodeList routes = (NodeList) xPath.evaluate("/governor-config/routes/*[self::asset or self::method]",
+                xml, XPathConstants.NODESET);
+        for (int i = 0; i < routes.getLength(); i++) {
+            Node routeNode = routes.item(i);
+            NamedNodeMap routeNodeAttrs = routeNode.getAttributes();
+            String routeNodeName = routeNode.getNodeName();
+            String routePath = routeNodeAttrs.getNamedItem("path").getNodeValue();
+
+            Route route;
+
+            if (routeNodeName.equals("asset")) {
+                route = new AssetRoute(routeNodeAttrs.getNamedItem("file").getNodeValue(),
+                        routeNodeAttrs.getNamedItem("mimetype").getNodeValue());
+            } else if (routeNodeName.equals("method")) {
+                route = new MethodRoute(routeNodeAttrs.getNamedItem("controller").getNodeValue(),
+                        routeNodeAttrs.getNamedItem("method").getNodeValue(),
+                        routeNodeAttrs.getNamedItem("verb").getNodeValue());
+            } else {
+                throw new InputMismatchException();
+            }
+
+            addRoute(routePath, route);
+        }
+    }
+
+    /**
+     * Set the enabled state of CORS.
+     *
+     * @param enable_cors The enabled state of CORS.
+     */
+    public void setEnableCors(boolean enable_cors) {
+        this.enable_cors = enable_cors;
+    }
+
+    /**
      * Set the server port.
+     *
+     * @param port The server port.
      */
     public void setPort(int port) {
         this.port = port;
