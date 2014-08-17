@@ -85,6 +85,15 @@ public class Configuration {
     }
 
     /**
+     * Get the routing table.
+     *
+     * @return
+     */
+    public HashMap<String, Route> getRoutes() {
+        return routingTable;
+    }
+
+    /**
      * Get the server port.
      *
      * @return The server port.
