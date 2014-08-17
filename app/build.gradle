@@ -29,6 +29,7 @@ dependencies {
     compile project(':app-web')
     compile project(':nanohttpd-core')
     compile 'com.google.code.gson:gson:2.2.+'
+    compile 'com.android.support:support-v4:20.0.0'
 }
 
 task cleanHtdocs(type: Delete) {

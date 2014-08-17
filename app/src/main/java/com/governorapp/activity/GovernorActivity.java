@@ -2,6 +2,7 @@ package com.governorapp.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -139,12 +140,20 @@ public class GovernorActivity extends Activity {
     /**
      * Handle action bar click.
      *
-     * @param item
-     * @return
+     * @param item Selected menu item.
+     * @return True if handled, else false.
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.settings:
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(intent);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /**

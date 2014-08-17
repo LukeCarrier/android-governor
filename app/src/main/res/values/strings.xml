@@ -8,4 +8,10 @@
     <string name="device_wifi_address_determining">Determining WiFi address...</string>
     <string name="device_wifi_address_error">Failed to determine your device\'s WiFi network address. Are you connected to a WiFi network?</string>
 
+    <string name="title_activity_settings">Settings</string>
+    <string name="pref_hdr_devel">Developer options</string>
+    <string name="pref_hdr_devel_summ">Advanced options to assist developers</string>
+    <string name="pref_cors">Enable CORS?</string>
+    <string name="pref_cors_summ">Cross-Origin Resource Sharing access to the Governor controllers from a separate device</string>
+
 </resources>
