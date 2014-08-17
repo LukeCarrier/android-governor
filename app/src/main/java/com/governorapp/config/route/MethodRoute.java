@@ -25,7 +25,7 @@ public class MethodRoute implements Route {
     protected String method;
 
     /**
-     * HTTP method
+     * HTTP method.
      */
     protected String verb;
 
