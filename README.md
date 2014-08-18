@@ -27,7 +27,6 @@ the dependencies can be fetched like so:
 
     $ cd app-web
     $ npm install
-    $ bower install
 
 And subsequent builds are just a call to Gulp away:
 
