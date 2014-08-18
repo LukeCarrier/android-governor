@@ -1,4 +1,12 @@
 /**
+ * Sidebar item.
+ */
+var SidebarItem = Backbone.Model.extend({
+    label: '',
+    path:  '',
+});
+
+/**
  * Sidebar item view.
  *
  * Represents an individual sidebar item within the view hierarchy.
@@ -8,8 +16,12 @@ var SidebarItemView = Backbone.View.extend({
 
     template: _.template('<a href="<%= path %>"><%= label %></a>'),
 
+    initialize: function() {
+        this.model.on('change', this.render);
+    },
+
     render: function() {
-        this.$el.html(this.template(this.model));
+        this.$el.html(this.template(this.model.toJSON()));
         return this;
     }
 });
@@ -57,13 +69,15 @@ var SidebarItemListView = Backbone.View.extend({
 
         items.unshift(new SidebarItemView({
             className: 'brand',
-            label:     'Governor',
-            path:      '#'
+            model: new SidebarItem({
+                label: 'Governor',
+                path:  '#'
+            })
         }));
 
         childHtml = _.map(items, function(item) {
-            return item.render();
-        }).join('');
+            return item.render().el;
+        });
 
         this.$el.html(childHtml);
 
