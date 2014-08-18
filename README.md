@@ -26,20 +26,19 @@ The web interface is easy to build independently of the overall application --
 the dependencies can be fetched like so:
 
     $ cd app-web
-    $ npm install -g bower gulp # you may need sudo here
     $ npm install
     $ bower install
 
 And subsequent builds are just a call to Gulp away:
 
     $ cd app-web
-    $ gulp
+    $ npm run gulp
 
 You can also watch the web UI for changes, optionally using LiveReload to save
 time when tweaking the UI:
 
     $ cd app-web
-    $ gulp watch --live-reload
+    $ npm run gulp:watch
 
 To further speed up frontend development, the UI can be tested on a server
 independently of the device hosting the Governor controllers. To achieve this,
