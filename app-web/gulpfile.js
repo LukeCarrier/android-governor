@@ -1,58 +1,58 @@
-var concat     = require('gulp-concat'),
-    del        = require('del'),
-    gulp       = require('gulp'),
-    less       = require('gulp-less'),
-    liveReload = require('gulp-livereload'),
-    minifyCss  = require('gulp-minify-css'),
-    minifyHtml = require('gulp-minify-html'),
-    path       = require('path'),
-    sourcemaps = require('gulp-sourcemaps'),
-    uglify     = require('gulp-uglify'),
-    util       = require('gulp-util');
+var concat     = require("gulp-concat"),
+    del        = require("del"),
+    gulp       = require("gulp"),
+    less       = require("gulp-less"),
+    liveReload = require("gulp-livereload"),
+    minifyCss  = require("gulp-minify-css"),
+    minifyHtml = require("gulp-minify-html"),
+    path       = require("path"),
+    sourcemaps = require("gulp-sourcemaps"),
+    uglify     = require("gulp-uglify"),
+    util       = require("gulp-util");
 
-var useLiveReload = !!util.env['live-reload'];
+var useLiveReload = !!util.env["live-reload"];
 
 var paths = {
-    html:      'html/*.html',
-    builtHtml: 'out',
+    html:      "html/*.html",
+    builtHtml: "out",
 
     script:               [
-        'bower_components/jquery/dist/jquery.js',
-        'bower_components/bootstrap/dist/js/bootstrap.js',
-        'bower_components/underscore/underscore.js',
-        'bower_components/backbone/backbone.js',
-        'script/lib/*.js',
-        'script/routes/*.js',
-        'script/init.js'
+        "bower_components/jquery/dist/jquery.js",
+        "bower_components/bootstrap/dist/js/bootstrap.js",
+        "bower_components/underscore/underscore.js",
+        "bower_components/backbone/backbone.js",
+        "script/lib/*.js",
+        "script/routes/*.js",
+        "script/init.js"
     ],
     scriptIe:             [
-        'bower_components/html5shiv/dist/html5shiv.js',
-        'bower_components/respond/dest/respond.src.js'
+        "bower_components/html5shiv/dist/html5shiv.js",
+        "bower_components/respond/dest/respond.src.js"
     ],
-    builtScript:          'out/js',
-    builtScriptAll:       'all.min.js',
-    builtScriptIe:        'ie.min.js',
-    builtScriptSourcemap: '.',
+    builtScript:          "out/js",
+    builtScriptAll:       "all.min.js",
+    builtScriptIe:        "ie.min.js",
+    builtScriptSourcemap: ".",
 
-    style:               'less/*.less',
-    builtStyle:          'out/css',
-    builtStyleAll:       'all.min.css',
-    builtStyleSourcemap: '.',
+    style:               "less/*.less",
+    builtStyle:          "out/css",
+    builtStyleAll:       "all.min.css",
+    builtStyleSourcemap: ".",
 
-    builtLiveReload: 'out/**/*'
+    builtLiveReload: "out/**/*"
 };
 
 /*
  * Clean up the build directory
  */
-gulp.task('clean', function(cb) {
-    del('out', cb);
+gulp.task("clean", function(cb) {
+    del("out", cb);
 });
 
 /*
  * Static HTML
  */
-gulp.task('html', function() {
+gulp.task("html", function() {
     var minifyOptions = {
         comments: true,    // just until the conditionals option is fixed
         conditionals: true
@@ -66,7 +66,7 @@ gulp.task('html', function() {
 /*
  * Cross-browser script
  */
-gulp.task('script', function() {
+gulp.task("script", function() {
     return gulp.src(paths.script)
                .pipe(sourcemaps.init())
                    .pipe(uglify())
@@ -78,7 +78,7 @@ gulp.task('script', function() {
 /*
  * Poly fill script for IE
  */
-gulp.task('script-ie', function() {
+gulp.task("script-ie", function() {
     return gulp.src(paths.scriptIe)
                .pipe(sourcemaps.init())
                    .pipe(uglify())
@@ -90,7 +90,7 @@ gulp.task('script-ie', function() {
 /*
  * LESS to CSS
  */
-gulp.task('style', function() {
+gulp.task("style", function() {
     return gulp.src(paths.style)
                .pipe(less())
                .pipe(minifyCss())
@@ -101,16 +101,16 @@ gulp.task('style', function() {
 /*
  * Default task
  */
-gulp.task('default', ['html', 'script', 'script-ie', 'style']);
+gulp.task("default", ["html", "script", "script-ie", "style"]);
 
 /*
  * Watch for changes, build immediately and (optionally) live reload
  */
-gulp.task('watch', function() {
-    gulp.watch(paths.html,     ['html']);
-    gulp.watch(paths.script,   ['script']);
-    gulp.watch(paths.scriptIe, ['script-ie']);
-    gulp.watch(paths.style,    ['style']);
+gulp.task("watch", function() {
+    gulp.watch(paths.html,     ["html"]);
+    gulp.watch(paths.script,   ["script"]);
+    gulp.watch(paths.scriptIe, ["script-ie"]);
+    gulp.watch(paths.style,    ["style"]);
 
     /* Add another watcher on build artefacts -- this will ensure LR doesn't
      * handle the change events before Gulp has finished outputting them. */
@@ -118,8 +118,8 @@ gulp.task('watch', function() {
         liveReload.listen();
 
         gulp.watch(paths.builtLiveReload, function(file) {
-            var relativePath = path.relative('.', file.path);
-            util.log(util.colors.magenta(relativePath) + ' live reloaded');
+            var relativePath = path.relative(".", file.path);
+            util.log(util.colors.magenta(relativePath) + " live reloaded");
 
             liveReload.changed(file.path);
         });

@@ -1,5 +1,5 @@
 var sidebarItemListView = new SidebarItemListView();
 
-router.on('route:index', function() {
+router.on("route:index", function() {
     sidebarItemListView.render();
 });

@@ -2,8 +2,8 @@
  * Sidebar item.
  */
 var SidebarItem = Backbone.Model.extend({
-    label: '',
-    path:  '',
+    label: "",
+    path:  ""
 });
 
 /**
@@ -17,7 +17,7 @@ var SidebarItemView = Backbone.View.extend({
     template: _.template('<a href="<%= path %>"><%= label %></a>'),
 
     initialize: function() {
-        this.model.on('change', this.render);
+        this.model.on("change", this.render);
     },
 
     render: function() {
@@ -37,7 +37,7 @@ var SidebarItemListView = Backbone.View.extend({
      *
      * @var string
      */
-    el: '.sidebar ul',
+    el: ".sidebar ul",
 
     /**
      * Array of sidebar items.
@@ -64,14 +64,14 @@ var SidebarItemListView = Backbone.View.extend({
      * @return SidebarItemListView This instance, for method chaining.
      */
     render: function() {
-        var html  = '',
+        var html  = "",
             items = this.items.slice(0);
 
         items.unshift(new SidebarItemView({
-            className: 'brand',
+            className: "brand",
             model: new SidebarItem({
-                label: 'Governor',
-                path:  '#'
+                label: "Governor",
+                path:  "#"
             })
         }));
 
