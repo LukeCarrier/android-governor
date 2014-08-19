@@ -21,3 +21,6 @@
 /app-web/build
 /app-web/out
 /app/src/main/assets/htdocs
+
+# Web UI log files
+/app-web/npm-debug.log
