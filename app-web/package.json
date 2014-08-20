@@ -32,6 +32,7 @@
         "gulp-sourcemaps": "^1.1.1",
         "gulp-uglify": "^0.3.1",
         "gulp-util": "^3.0.0",
+        "jscs": "^1.5.9",
         "vinyl-source-stream": "^0.1.1"
     },
 
@@ -45,7 +46,8 @@
         "postinstall": "bower install",
         "gulp": "gulp",
         "gulp:clean": "gulp clean",
-        "gulp:watch": "gulp watch --livereload"
+        "gulp:watch": "gulp watch --livereload",
+        "jscs": "jscs gulpfile.js script/"
     },
 
     "browser": {
