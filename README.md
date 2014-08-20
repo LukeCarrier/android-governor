@@ -28,6 +28,10 @@ the dependencies can be fetched like so:
     $ cd app-web
     $ npm install
 
+> *NOTE*: at present, ```npm install``` will raise warnings about peer
+> dependencies. This warning is harmless and will be resolved with a future
+> update to [browserify-shim](https://github.com/thlorenz/browserify-shim).
+
 And subsequent builds are just a call to Gulp away:
 
     $ cd app-web
