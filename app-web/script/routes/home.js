@@ -1,16 +1,21 @@
-var sidebar = require("../lib/sidebar");
-
-var sidebarItemListView = new sidebar.SidebarItemListView();
+var SidebarItem = require("../models/sidebar-item");
 
 function registerRoutes(router) {
     router.route("", "home");
 
     router.on("route:home", function() {
-        sidebarItemListView.render();
     });
 }
 
+function registerSidebarItems(sidebar) {
+    sidebar.items.add(new SidebarItem({
+        brand: true,
+        label: "Governor",
+        path:  "#"
+    }));
+}
+
 module.exports = {
-    registerRoutes:      registerRoutes,
-    sidebarItemListView: sidebarItemListView
+    registerRoutes:       registerRoutes,
+    registerSidebarItems: registerSidebarItems
 };

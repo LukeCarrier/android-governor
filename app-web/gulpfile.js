@@ -18,7 +18,7 @@ var paths = {
     html:      "html/*.html",
     builtHtml: "out",
 
-    scriptGovernor: "./script/init.js", // must be relative for Browserify
+    scriptGovernor: "./script", // must be relative for Browserify
     scriptVendorIe: [
         "bower_components/html5shiv/dist/html5shiv.js",
         "bower_components/respond/dest/respond.src.js"
