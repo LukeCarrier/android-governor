@@ -46,7 +46,7 @@
         "postinstall": "bower install",
         "gulp": "gulp",
         "gulp:clean": "gulp clean",
-        "gulp:watch": "gulp watch --livereload",
+        "gulp:watch": "gulp watch --live-reload",
         "jscs": "jscs gulpfile.js script/"
     },
 
