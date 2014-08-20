@@ -43,9 +43,11 @@ To further speed up frontend development, the UI can be tested on a server
 independently of the device hosting the Governor controllers. To achieve this,
 you need to configure a filter on all jQuery AJAX requests like so:
 
-    $.ajaxPrefilter(function(options, originalOptions, jqXhr) {
-        options.url = 'http://192.168.1.138:8080' + options.url;
-    });
+    module.exports = function() {
+        $.ajaxPrefilter(function(options, originalOptions, jqXhr) {
+            options.url = 'http://192.168.1.138:8080' + options.url;
+        });
+    };
 
 Pop the above into ```app-web/script/lib/local.js```, save and allow gulp to
 rebuild all the assets.

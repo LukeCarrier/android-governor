@@ -1,3 +1,6 @@
+var _        = require("underscore"),
+    Backbone = require("backbone");
+
 /**
  * Sidebar item.
  */
@@ -84,3 +87,9 @@ var SidebarItemListView = Backbone.View.extend({
         return this;
     }
 });
+
+module.exports = {
+    SidebarItem:         SidebarItem,
+    SidebarItemView:     SidebarItemView,
+    SidebarItemListView: SidebarItemListView
+};

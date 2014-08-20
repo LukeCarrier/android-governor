@@ -1,5 +1,14 @@
-var sidebarItemListView = new SidebarItemListView();
+var _    = require("underscore"),
+    home = require("./home");
 
-router.on("route:index", function() {
-    sidebarItemListView.render();
-});
+module.exports = function(router) {
+    var routes = {
+        home: home
+    };
+
+    _.each(routes, function(route) {
+        route.registerRoutes(router);
+    });
+
+    return router;
+};

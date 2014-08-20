@@ -19,6 +19,8 @@
     ],
 
     "devDependencies": {
+        "browserify": "^4.2.3",
+        "browserify-shim": "^3.6.0",
         "bower": "^1.3.9",
         "del": "^0.1.1",
         "gulp": "^3.8.7",
@@ -29,12 +31,40 @@
         "gulp-minify-html": "^0.1.4",
         "gulp-sourcemaps": "^1.1.1",
         "gulp-uglify": "^0.3.1",
-        "gulp-util": "^3.0.0"
+        "gulp-util": "^3.0.0",
+        "vinyl-source-stream": "^0.1.1"
     },
+
+    "dependencies": {
+        "backbone": "^1.1.2",
+        "jquery": "^2.1.1",
+        "underscore": "^1.6.0"
+    },
+
     "scripts": {
         "postinstall": "bower install",
         "gulp": "gulp",
         "gulp:clean": "gulp clean",
         "gulp:watch": "gulp watch --livereload"
+    },
+
+    "browser": {
+        "bootstrap": "bower_components/bootstrap/dist/js/bootstrap.js"
+    },
+
+    "browserify": {
+        "transform": [
+            "browserify-shim"
+        ]
+    },
+
+    "browserify-shim": {
+        "bootstrap": {
+            "path": "bower_components/bootstrap/dist/js/bootstrap.js",
+            "exports": "bootstrap",
+            "depends": [
+                "jquery:$"
+            ]
+        }
     }
 }

@@ -1,7 +1,5 @@
-var Router = Backbone.Router.extend({
-    routes: {
-        "": "index"
-    }
-});
+var Backbone = require("backbone");
 
-var router = new Router();
+var Router = Backbone.Router.extend({});
+
+module.exports = Router;

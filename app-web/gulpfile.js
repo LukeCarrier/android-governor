@@ -1,6 +1,8 @@
-var concat     = require("gulp-concat"),
+var browserify = require("browserify"),
+    concat     = require("gulp-concat"),
     del        = require("del"),
     gulp       = require("gulp"),
+    gulpIf     = require("gulp-if"),
     less       = require("gulp-less"),
     liveReload = require("gulp-livereload"),
     minifyCss  = require("gulp-minify-css"),
@@ -8,7 +10,8 @@ var concat     = require("gulp-concat"),
     path       = require("path"),
     sourcemaps = require("gulp-sourcemaps"),
     uglify     = require("gulp-uglify"),
-    util       = require("gulp-util");
+    util       = require("gulp-util"),
+    source     = require("vinyl-source-stream");
 
 var useLiveReload = !!util.env["live-reload"];
 
@@ -16,24 +19,13 @@ var paths = {
     html:      "html/*.html",
     builtHtml: "out",
 
-    scriptGovernor: [
-        "script/lib/*.js",
-        "script/routes/*.js",
-        "script/init.js"
-    ],
+    scriptGovernor: "./script/init.js", // must be relative for Browserify
     scriptVendorIe: [
         "bower_components/html5shiv/dist/html5shiv.js",
         "bower_components/respond/dest/respond.src.js"
     ],
-    scriptVendor: [
-        "bower_components/jquery/dist/jquery.js",
-        "bower_components/bootstrap/dist/js/bootstrap.js",
-        "bower_components/underscore/underscore.js",
-        "bower_components/backbone/backbone.js",
-    ],
     builtScript:          "out/js",
     builtScriptGovernor:  "governor.min.js",
-    builtScriptVendor:    "vendor.min.js",
     builtScriptVendorIe:  "vendor-ie.min.js",
     builtScriptSourcemap: ".",
 
@@ -45,13 +37,27 @@ var paths = {
     builtLiveReload: "out/**/*"
 };
 
-function processScript(srcPath, targetPath) {
-    return gulp.src(srcPath)
-               .pipe(sourcemaps.init())
-                   .pipe(uglify())
-                   .pipe(concat(targetPath))
-                   .pipe(sourcemaps.write(paths.builtScriptSourcemap))
-               .pipe(gulp.dest(paths.builtScript));
+function processScript(srcPath, targetPath, browserifyBundle) {
+    var stream;
+
+    browserifyBundle = !!browserifyBundle;
+
+    if (browserifyBundle) {
+        stream = browserify({
+            entries: [srcPath],
+            debug:   true
+        }).bundle().pipe(source(targetPath));
+    } else {
+        stream = gulp.src(srcPath)
+                     .pipe(sourcemaps.init())
+                         .pipe(concat(targetPath))
+                         .pipe(uglify())
+                         .pipe(sourcemaps.write(paths.builtScriptSourcemap));
+    }
+
+    stream.pipe(gulp.dest(paths.builtScript));
+
+    return stream;
 }
 
 /*
@@ -79,14 +85,7 @@ gulp.task("html", function() {
  * Cross-browser script
  */
 gulp.task("script", function() {
-    return processScript(paths.scriptGovernor, paths.builtScriptGovernor);
-});
-
-/*
- * Cross-browser script packaged from vendors
- */
-gulp.task("script-vendor", function() {
-    return processScript(paths.scriptVendor, paths.builtScriptVendor);
+    return processScript(paths.scriptGovernor, paths.builtScriptGovernor, true);
 });
 
 /*
@@ -110,7 +109,7 @@ gulp.task("style", function() {
 /*
  * Default task
  */
-gulp.task("default", ["html", "script", "script-vendor", "script-vendor-ie", "style"]);
+gulp.task("default", ["html", "script", "script-vendor-ie", "style"]);
 
 /*
  * Watch for changes, build immediately and (optionally) live reload
