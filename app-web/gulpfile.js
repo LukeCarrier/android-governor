@@ -10,7 +10,8 @@ var browserify = require("browserify"),
     sourcemaps = require("gulp-sourcemaps"),
     uglify     = require("gulp-uglify"),
     util       = require("gulp-util"),
-    source     = require("vinyl-source-stream");
+    source     = require("vinyl-source-stream"),
+    watchify   = require("watchify");
 
 var useLiveReload = !!util.env["live-reload"];
 
@@ -18,7 +19,7 @@ var paths = {
     html:      "html/*.html",
     builtHtml: "out",
 
-    scriptGovernor: "./script", // must be relative for Browserify
+    scriptGovernor: "./script/index.js", // must be relative for Browserify
     scriptVendorIe: [
         "bower_components/html5shiv/dist/html5shiv.js",
         "bower_components/respond/dest/respond.src.js"
@@ -36,24 +37,39 @@ var paths = {
     builtLiveReload: "out/**/*"
 };
 
-function processScript(srcPath, targetPath, browserifyBundle) {
-    var stream;
+/**
+ * Source a set of paths, perform non-browserify transforms and return a stream.
+ *
+ * @param string srcPath
+ * @param string targetPath
+ *
+ * @return stream
+ */
+function sourceScript(srcPath, targetPath) {
+    return gulp.src(srcPath)
+               .pipe(sourcemaps.init())
+                   .pipe(concat(targetPath))
+                   .pipe(uglify())
+                   .pipe(sourcemaps.write(paths.builtScriptSourcemap));
+}
 
-    browserifyBundle = !!browserifyBundle;
+/**
+ * Source a set of paths and return a browserify or object.
+ *
+ * @param string  srcPath
+ * @param boolean useWatchify
+ */
+function sourceScriptBrowserify(srcPath) {
+    return browserify({
+        cache:        {},
+        debug:        true,
+        entries:      [srcPath],
+        fullPaths:    true,
+        packageCache: {}
+    });
+}
 
-    if (browserifyBundle) {
-        stream = browserify({
-            entries: [srcPath],
-            debug:   true
-        }).bundle().pipe(source(targetPath));
-    } else {
-        stream = gulp.src(srcPath)
-                     .pipe(sourcemaps.init())
-                         .pipe(concat(targetPath))
-                         .pipe(uglify())
-                         .pipe(sourcemaps.write(paths.builtScriptSourcemap));
-    }
-
+function processScript(stream) {
     stream.pipe(gulp.dest(paths.builtScript));
 
     return stream;
@@ -81,17 +97,35 @@ gulp.task("html", function() {
 });
 
 /*
- * Cross-browser script
+ * Cross-browser script (via Browserify)
  */
 gulp.task("script", function() {
-    return processScript(paths.scriptGovernor, paths.builtScriptGovernor, true);
+    var browserifyer = sourceScriptBrowserify(paths.scriptGovernor),
+        stream       = browserifyer.bundle().pipe(source(paths.builtScriptGovernor));
+
+    return processScript(stream);
+});
+
+/**
+ * Cross-browser script (via Watchify).
+ */
+gulp.task("script-watch", function() {
+    var browserifyer = sourceScriptBrowserify(paths.scriptGovernor, true),
+        watchifyer   = watchify(browserifyer);
+
+    watchifyer.on("update", function() {
+        var stream = watchifyer.bundle().pipe(source(paths.builtScriptGovernor));
+        processScript(stream);
+    });
 });
 
 /*
  * Poly fill script for IE
  */
 gulp.task("script-vendor-ie", function() {
-    return processScript(paths.scriptVendorIe, paths.builtScriptVendorIe);
+    var stream = sourceScript(paths.scriptVendorIe, paths.builtScriptVendorIe);
+
+    return processScript(stream);
 });
 
 /*
@@ -113,9 +147,8 @@ gulp.task("default", ["html", "script", "script-vendor-ie", "style"]);
 /*
  * Watch for changes, build immediately and (optionally) live reload
  */
-gulp.task("watch", function() {
+gulp.task("watch", ["script-watch"], function() {
     gulp.watch(paths.html,     ["html"]);
-    gulp.watch(paths.script,   ["script"]);
     gulp.watch(paths.scriptIe, ["script-ie"]);
     gulp.watch(paths.style,    ["style"]);
 
