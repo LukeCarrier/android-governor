@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import fi.iki.elonen.NanoHTTPD;
 
 import com.governorapp.config.Configuration;
-import com.governorapp.server.ControllerResponse;
 
 /**
  * Abstract controller.
@@ -32,7 +31,7 @@ public class AbstractController {
      * @return A response.
      */
     protected NanoHTTPD.Response respond(Object data) {
-        return respond(data, NanoHTTPD.Response.Status.OK, null);
+        return respond(data, NanoHTTPD.Response.Status.OK);
     }
 
     /**
@@ -43,11 +42,9 @@ public class AbstractController {
      * @param errors Errors/warnings which occurred during the processing of the request.
      * @return A response.
      */
-    protected NanoHTTPD.Response respond(Object data, NanoHTTPD.Response.IStatus status, String[] errors) {
-        ControllerResponse response = new ControllerResponse(data, errors);
-
+    protected NanoHTTPD.Response respond(Object data, NanoHTTPD.Response.IStatus status) {
         Gson gson = new Gson();
-        String body = gson.toJson(response);
+        String body = gson.toJson(data);
 
         return new NanoHTTPD.Response(status, "application/json", body);
     }
