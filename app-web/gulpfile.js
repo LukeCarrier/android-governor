@@ -1,6 +1,7 @@
 var browserify = require("browserify"),
     concat     = require("gulp-concat"),
     del        = require("del"),
+    fs         = require("fs"),
     gulp       = require("gulp"),
     less       = require("gulp-less"),
     liveReload = require("gulp-livereload"),
@@ -102,6 +103,10 @@ gulp.task("html", function() {
 gulp.task("script", function() {
     var browserifyer = sourceScriptBrowserify(paths.scriptGovernor),
         stream       = browserifyer.bundle().pipe(source(paths.builtScriptGovernor));
+
+    if (fs.existsSync("script/local.js")) {
+        util.log(util.colors.red("local.js found") + " -- don't ship this build to production!");
+    }
 
     return processScript(stream);
 });

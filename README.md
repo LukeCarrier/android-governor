@@ -53,7 +53,7 @@ you need to configure a filter on all jQuery AJAX requests like so:
         });
     };
 
-Pop the above into ```app-web/script/lib/local.js```, save and allow gulp to
+Pop the above into ```app-web/script/local.js```, save and allow gulp to
 rebuild all the assets.
 
 To do
