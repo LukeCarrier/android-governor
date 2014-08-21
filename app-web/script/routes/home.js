@@ -1,9 +1,10 @@
 var SidebarItem = require("../models/sidebar-item");
 
-function registerRoutes(router) {
+function registerRoutes(router, contentView) {
     router.route("", "home");
 
     router.on("route:home", function() {
+        contentView.setActiveView(systemBuildView);
     });
 }
 
