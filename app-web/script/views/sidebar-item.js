@@ -9,7 +9,7 @@ var _        = require("underscore"),
 var SidebarItemView = Backbone.View.extend({
     tagName: "li",
 
-    template: _.template('<a href="<%= path %>"><%= label %></a>'),
+    template: _.template('<a href="#/<%= route %>"><%= label %></a>'),
 
     initialize: function() {
         this.model.bind("change", this.render, this);
@@ -17,6 +17,11 @@ var SidebarItemView = Backbone.View.extend({
 
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
+
+        if (this.model.get("active")) {
+            this.$el.addClass("active");
+        }
+
         if (this.model.get("brand")) {
             this.$el.addClass("brand");
         }

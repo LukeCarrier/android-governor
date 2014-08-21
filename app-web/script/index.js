@@ -15,7 +15,8 @@ var ContentView = require("./views/content"),
     SidebarView = require("./views/sidebar");
 
 var contentView = new ContentView(),
-    sidebarView = new SidebarView({ model: new Sidebar() }),
+    sidebar     = new Sidebar(),
+    sidebarView = new SidebarView({ model: sidebar }),
     router      = new Router(),
     routes      = require("./routes")(router, contentView, sidebarView);
 
@@ -25,8 +26,17 @@ try {
     require("./local")();
 } catch (e) {}
 
-router.on("route", function() {
-    sidebarView.render();
+/* Render the sidebar for the first time, then ensure we update the active menu
+ * item whenever the router handles a navigation event. */
+sidebarView.render();
+router.on("route", function(route) {
+    var activeItems   = sidebar.items.where({ active: true }),
+        newActiveItem = sidebar.items.findWhere({ route: route });
+
+    activeItems.map(function(item) {
+        item.set("active", false);
+    });
+    newActiveItem.set("active", true);
 });
 
 Backbone.history.start();

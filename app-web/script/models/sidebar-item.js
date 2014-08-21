@@ -4,9 +4,12 @@ var Backbone = require("backbone");
  * Sidebar item.
  */
 var SidebarItem = Backbone.Model.extend({
-    brand: false,
-    label: "",
-    path:  "#"
+    defaults: {
+        active: false,
+        brand: false,
+        label: "",
+        route:  ""
+    }
 });
 
 module.exports = SidebarItem;

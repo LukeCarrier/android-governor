@@ -19,7 +19,7 @@ function registerSidebarItems(sidebar) {
     sidebar.items.add(new SidebarItem({
         brand: true,
         label: "Governor",
-        path:  "#"
+        route: "home"
     }));
 }
 
