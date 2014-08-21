@@ -33,10 +33,14 @@ var paths = {
     style:               "less/*.less",
     builtStyle:          "out/css",
     builtStyleAll:       "all.min.css",
-    builtStyleSourcemap: ".",
-
-    builtLiveReload: "out/**/*"
+    builtStyleSourcemap: "."
 };
+
+paths.builtLiveReload = [
+    paths.builtHtml   + "/*",
+    paths.builtScript + "/*",
+    paths.builtStyle  + "/*"
+];
 
 /**
  * Source a set of paths, perform non-browserify transforms and return a stream.
@@ -122,6 +126,7 @@ gulp.task("script-watch", function() {
         var stream = watchifyer.bundle().pipe(source(paths.builtScriptGovernor));
         processScript(stream);
     });
+
 });
 
 /*
