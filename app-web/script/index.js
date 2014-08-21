@@ -17,6 +17,12 @@ var sidebarView = new SidebarView({ model: new Sidebar() }),
     router      = new Router(),
     routes      = require("./routes")(router, sidebarView);
 
+/* Try and load the developer's local configuration if possible. Be sure to
+ * relocate this file before doing production builds! */
+try {
+    require("./local")();
+} catch (e) {}
+
 router.on("route", function() {
     sidebarView.render();
 });
