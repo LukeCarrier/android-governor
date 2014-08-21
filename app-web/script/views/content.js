@@ -7,11 +7,15 @@ var ContentView = Backbone.View.extend({
 
     render: function() {
         this.$el.html(this.activeView.render().el);
+
+        return this;
     },
 
     setActiveView: function(view) {
         this.activeView = view;
         this.render();
+
+        return this;
     }
 });
 
