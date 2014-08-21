@@ -6,11 +6,11 @@ android {
     buildToolsVersion '20.0.0'
 
     defaultConfig {
-        applicationId "com.governorapp"
+        applicationId 'com.governorapp'
         minSdkVersion 14
         targetSdkVersion 14
         versionCode 1
-        versionName "1.0"
+        versionName '0.1.0'
     }
     buildTypes {
         release {
