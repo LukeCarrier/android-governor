@@ -12,7 +12,7 @@ var SidebarItemView = Backbone.View.extend({
     template: _.template('<a href="<%= path %>"><%= label %></a>'),
 
     initialize: function() {
-        this.model.on("change", this.render);
+        this.model.bind("change", this.render, this);
     },
 
     render: function() {
