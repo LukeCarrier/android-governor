@@ -108,8 +108,8 @@ gulp.task("script", function() {
     var browserifyer = sourceScriptBrowserify(paths.scriptGovernor),
         stream       = browserifyer.bundle().pipe(source(paths.builtScriptGovernor));
 
-    if (fs.existsSync("script/local.js")) {
-        util.log(util.colors.red("local.js found") + " -- don't ship this build to production!");
+    if (fs.readFileSync("script/local.js").toString() !== '') {
+        util.log(util.colors.red("modified local.js found") + " -- don't ship this build to production!");
     }
 
     return processScript(stream);

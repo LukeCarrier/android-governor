@@ -22,9 +22,10 @@ var contentView = new ContentView(),
 
 /* Try and load the developer's local configuration if possible. Be sure to
  * relocate this file before doing production builds! */
-try {
-    require("./local")();
-} catch (e) {}
+var local = require("./local");
+if (typeof local === "function") {
+    local();
+}
 
 /* Render the sidebar for the first time, then ensure we update the active menu
  * item whenever the router handles a navigation event. */
