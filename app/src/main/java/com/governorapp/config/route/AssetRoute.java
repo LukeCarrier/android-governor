@@ -3,13 +3,13 @@ package com.governorapp.config.route;
 import android.content.Context;
 import android.content.res.AssetManager;
 
+import com.governorapp.config.Configuration;
+import com.governorapp.config.Route;
+
 import java.io.IOException;
 import java.io.InputStream;
 
 import fi.iki.elonen.NanoHTTPD;
-
-import com.governorapp.config.Configuration;
-import com.governorapp.config.Route;
 
 /**
  * Static asset route.

@@ -1,8 +1,6 @@
 package com.governorapp.config.route;
 
 import android.content.Context;
-
-import fi.iki.elonen.NanoHTTPD;
 import android.util.Log;
 
 import com.governorapp.BuildConfig;
@@ -11,6 +9,8 @@ import com.governorapp.config.Route;
 import com.governorapp.server.Controller;
 import com.governorapp.server.ControllerClassObjectPair;
 import com.governorapp.server.ControllerFactory;
+
+import fi.iki.elonen.NanoHTTPD;
 
 /**
  * Dynamic method route.
@@ -56,6 +56,7 @@ public class MethodRoute implements Route {
             if (BuildConfig.DEBUG) {
                 Log.e("com.governorapp", "exception when executing method", e);
             }
+
             return new NanoHTTPD.Response(NanoHTTPD.Response.Status.INTERNAL_ERROR,
                     NanoHTTPD.MIME_PLAINTEXT, "500 Internal Error");
         }

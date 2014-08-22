@@ -1,7 +1,9 @@
 package com.governorapp.config;
 
 import android.content.SharedPreferences;
-import android.util.Log;
+
+import com.governorapp.config.route.AssetRoute;
+import com.governorapp.config.route.MethodRoute;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -17,9 +19,6 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import com.governorapp.config.route.AssetRoute;
-import com.governorapp.config.route.MethodRoute;
-
 /**
  * Root configuration node.
  */
@@ -31,7 +30,7 @@ public class Configuration {
 
     /**
      * The enabled state of CORS.
-     *
+     * <p/>
      * If enabled, CORS will cause a header containing "access-control-allow-origin: *" to be sent
      * with responses.
      */
@@ -66,7 +65,18 @@ public class Configuration {
      *
      * @return The enabled status of CORS.
      */
-    public boolean getEnableCors() { return enable_cors; }
+    public boolean getEnableCors() {
+        return enable_cors;
+    }
+
+    /**
+     * Set the enabled state of CORS.
+     *
+     * @param enable_cors The enabled state of CORS.
+     */
+    public void setEnableCors(boolean enable_cors) {
+        this.enable_cors = enable_cors;
+    }
 
     /**
      * Get the route for a given path.
@@ -100,6 +110,15 @@ public class Configuration {
      */
     public int getPort() {
         return port;
+    }
+
+    /**
+     * Set the server port.
+     *
+     * @param port The server port.
+     */
+    public void setPort(int port) {
+        this.port = port;
     }
 
     /**
@@ -151,23 +170,5 @@ public class Configuration {
 
             addRoute(routePath, route);
         }
-    }
-
-    /**
-     * Set the enabled state of CORS.
-     *
-     * @param enable_cors The enabled state of CORS.
-     */
-    public void setEnableCors(boolean enable_cors) {
-        this.enable_cors = enable_cors;
-    }
-
-    /**
-     * Set the server port.
-     *
-     * @param port The server port.
-     */
-    public void setPort(int port) {
-        this.port = port;
     }
 }

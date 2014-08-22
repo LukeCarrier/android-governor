@@ -5,7 +5,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
-
 import com.governorapp.R;
 
 import java.util.List;

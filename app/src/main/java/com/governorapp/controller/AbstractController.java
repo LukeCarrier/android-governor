@@ -3,10 +3,9 @@ package com.governorapp.controller;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.governorapp.config.Configuration;
 
 import fi.iki.elonen.NanoHTTPD;
-
-import com.governorapp.config.Configuration;
 
 /**
  * Abstract controller.

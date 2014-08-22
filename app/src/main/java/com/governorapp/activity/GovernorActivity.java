@@ -14,6 +14,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.governorapp.R;
+import com.governorapp.config.Configuration;
+import com.governorapp.server.Server;
+
 import org.w3c.dom.Document;
 
 import java.io.IOException;
@@ -24,10 +28,6 @@ import java.net.UnknownHostException;
 import java.nio.ByteOrder;
 
 import javax.xml.parsers.DocumentBuilderFactory;
-
-import com.governorapp.R;
-import com.governorapp.config.Configuration;
-import com.governorapp.server.Server;
 
 /**
  * Governor activity.

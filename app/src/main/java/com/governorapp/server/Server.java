@@ -2,11 +2,12 @@ package com.governorapp.server;
 
 import android.content.Context;
 
+import com.governorapp.config.Configuration;
+import com.governorapp.config.Route;
+
 import java.io.IOException;
 
 import fi.iki.elonen.NanoHTTPD;
-import com.governorapp.config.Configuration;
-import com.governorapp.config.Route;
 
 /**
  * Governor HTTP server.
@@ -36,7 +37,7 @@ public class Server extends NanoHTTPD {
 
         if (config.getEnableCors()) {
             response.addHeader("Access-Control-Allow-Methods", "DELETE, GET, POST, PUT");
-            response.addHeader("Access-Control-Allow-Origin",  "*");
+            response.addHeader("Access-Control-Allow-Origin", "*");
             response.addHeader("Access-Control-Allow-Headers", "X-Requested-With");
         }
 

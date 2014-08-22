@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
-    <header android:fragment="com.governorapp.activity.SettingsActivity$DeveloperFragment"
-        android:title="@string/pref_hdr_devel"
-        android:summary="@string/pref_hdr_devel_summ" />
+    <header
+        android:fragment="com.governorapp.activity.SettingsActivity$DeveloperFragment"
+        android:summary="@string/pref_hdr_devel_summ"
+        android:title="@string/pref_hdr_devel" />
 </preference-headers>

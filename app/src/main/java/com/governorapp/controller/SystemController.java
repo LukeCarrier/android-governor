@@ -3,12 +3,12 @@ package com.governorapp.controller;
 import android.content.Context;
 import android.os.Build;
 
+import com.governorapp.config.Configuration;
+import com.governorapp.server.Controller;
+
 import java.util.HashMap;
 
 import fi.iki.elonen.NanoHTTPD;
-
-import com.governorapp.config.Configuration;
-import com.governorapp.server.Controller;
 
 /**
  * System controller.
