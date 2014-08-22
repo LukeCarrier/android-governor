@@ -3,7 +3,9 @@ package com.governorapp.config.route;
 import android.content.Context;
 
 import fi.iki.elonen.NanoHTTPD;
+import android.util.Log;
 
+import com.governorapp.BuildConfig;
 import com.governorapp.config.Configuration;
 import com.governorapp.config.Route;
 import com.governorapp.server.Controller;
@@ -51,6 +53,9 @@ public class MethodRoute implements Route {
 
             return (NanoHTTPD.Response) controllerClass.getMethod(method).invoke(controller);
         } catch (Exception e) {
+            if (BuildConfig.DEBUG) {
+                Log.e("com.governorapp", "exception when executing method", e);
+            }
             return new NanoHTTPD.Response(NanoHTTPD.Response.Status.INTERNAL_ERROR,
                     NanoHTTPD.MIME_PLAINTEXT, "500 Internal Error");
         }
