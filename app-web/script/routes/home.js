@@ -3,13 +3,15 @@ var SidebarItem     = require("../models/sidebar-item"),
     SystemBuildView = require("../views/system-build");
 
 function registerRoutes(router, contentView) {
-    router.route("", "home");
+    router.route("", "");
 
-    router.on("route:home", function() {
+    router.on("route:", function() {
         var systemBuild     = new SystemBuild(),
             systemBuildView = new SystemBuildView({ model: systemBuild });
 
-        contentView.setActiveView(systemBuildView);
+        contentView.setActiveTitle("System information")
+                   .setActiveView(systemBuildView)
+                   .render();
 
         systemBuild.fetch();
     });
@@ -19,7 +21,7 @@ function registerSidebarItems(sidebar) {
     sidebar.items.add(new SidebarItem({
         brand: true,
         label: "Governor",
-        route: "home"
+        route: ""
     }));
 }
 
