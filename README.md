@@ -1,6 +1,10 @@
 Governor
 ========
 
+<p align="center">
+    <img width="256" height="256" src="http://governorapp.com/assets/logo-dark.png">
+</p>
+
 Like AirDroid, but with freedomsauce.
 
 * * *
@@ -48,7 +52,7 @@ independently of the device hosting the Governor controllers. To achieve this,
 you need to configure a filter on all jQuery AJAX requests like so:
 
     var $ = require("jquery");
-    
+
     module.exports = function() {
         $.ajaxPrefilter(function(options, originalOptions, jqXhr) {
             options.url = "http://192.168.1.138:8080" + options.url;
