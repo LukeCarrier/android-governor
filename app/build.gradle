@@ -46,4 +46,4 @@ task removeHtdocsManifest(type: Delete, dependsOn: copyHtdocs) {
 }
 
 clean.dependsOn(cleanHtdocs)
-assemble.dependsOn(removeHtdocsManifest)
+preBuild.dependsOn(removeHtdocsManifest)
