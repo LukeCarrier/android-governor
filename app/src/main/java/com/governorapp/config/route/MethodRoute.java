@@ -44,7 +44,7 @@ public class MethodRoute implements Route {
     @Override
     public NanoHTTPD.Response getResponse(Context appContext, Configuration config, NanoHTTPD.IHTTPSession session) {
         try {
-            ControllerClassObjectPair controllerPair = ControllerFactory.getInstance().getController(controller, config);
+            ControllerClassObjectPair controllerPair = ControllerFactory.getInstance().getController(controller, appContext, config);
 
             Class<?> controllerClass = controllerPair.getCls();
             Controller controller = controllerPair.getController();

@@ -1,5 +1,7 @@
 package com.governorapp.server;
 
+import android.content.Context;
+
 import com.governorapp.config.Configuration;
 
 import java.lang.reflect.InvocationTargetException;
@@ -34,22 +36,25 @@ public class ControllerFactory {
     /**
      * Get a controller by name.
      *
-     * @param name The name of the controller to retrieve.
+     * @param name       The name of the controller to retrieve.
+     * @param appContext The application context.
+     * @param config     Governor's configuration.
      * @return An instance of the designated controller.
      * @throws ClassNotFoundException
      * @throws IllegalAccessException
      * @throws InstantiationException
      */
-    public ControllerClassObjectPair getController(String name, Configuration config)
+    public ControllerClassObjectPair getController(String name, Context appContext, Configuration config)
             throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException,
             InvocationTargetException, InstantiationException {
         String clsName = String.format(CLASS_FORMAT, name);
 
         Class<?> cls = Class.forName(clsName);
 
-        Class[] prototype = new Class[1];
-        prototype[0] = Configuration.class;
+        Class[] prototype = new Class[2];
+        prototype[0] = Context.class;
+        prototype[1] = Configuration.class;
 
-        return new ControllerClassObjectPair(cls, (Controller) cls.getDeclaredConstructor(prototype).newInstance(config));
+        return new ControllerClassObjectPair(cls, (Controller) cls.getDeclaredConstructor(prototype).newInstance(appContext, config));
     }
 }

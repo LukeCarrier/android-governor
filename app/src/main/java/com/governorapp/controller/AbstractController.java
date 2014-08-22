@@ -1,5 +1,7 @@
 package com.governorapp.controller;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 
 import fi.iki.elonen.NanoHTTPD;
@@ -16,11 +18,18 @@ public class AbstractController {
     protected Configuration config;
 
     /**
+     * Application context.
+     */
+    protected Context appContext;
+
+    /**
      * Constructor.
      *
-     * @param config Governor server configuration.
+     * @param appContext Application context.
+     * @param config     Governor server configuration.
      */
-    public AbstractController(Configuration config) {
+    public AbstractController(Context appContext, Configuration config) {
+        this.appContext = appContext;
         this.config = config;
     }
 

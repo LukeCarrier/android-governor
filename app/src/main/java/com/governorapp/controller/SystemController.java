@@ -1,5 +1,6 @@
 package com.governorapp.controller;
 
+import android.content.Context;
 import android.os.Build;
 
 import java.util.HashMap;
@@ -20,8 +21,8 @@ public class SystemController extends AbstractController implements Controller {
      *
      * @param config
      */
-    public SystemController(Configuration config) {
-        super(config);
+    public SystemController(Context appContext, Configuration config) {
+        super(appContext, config);
     }
 
     /**
