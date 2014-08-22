@@ -8,8 +8,8 @@
         <!-- Static assets for the user interface -->
         <asset file="/htdocs/index.html" mimetype="text/html" path="/" />
         <asset file="/htdocs/css/all.min.css" mimetype="text/css" path="/css/all.min.css" />
-        <asset file="/htdocs/js/all.min.js" mimetype="text/javascript" path="/js/all.min.js" />
-        <asset file="/htdocs/js/all.min.js.map" mimetype="application/octet-stream" path="/js/all.min.js.map" />
+        <asset file="/htdocs/js/governor.min.js" mimetype="text/javascript" path="/js/governor.min.js" />
+        <asset file="/htdocs/js/governor.min.js.map" mimetype="application/octet-stream" path="/js/governor.min.js.map" />
         <asset file="/htdocs/js/ie.min.js" mimetype="text/javascript" path="/js/ie.min.js" />
         <asset file="/htdocs/js/ie.min.js.map" mimetype="application/octet-stream" path="/js/ie.min.js.map" />
 
