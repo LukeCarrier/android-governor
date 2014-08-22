@@ -18,7 +18,7 @@ var contentView = new ContentView(),
     sidebar     = new Sidebar(),
     sidebarView = new SidebarView({ model: sidebar }),
     router      = new Router(),
-    routes      = require("./routes")(router, contentView, sidebarView);
+    routes      = require("./routes")(router, sidebar, contentView);
 
 /* Try and load the developer's local configuration if possible. Be sure to
  * relocate this file before doing production builds! */
