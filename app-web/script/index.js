@@ -30,7 +30,7 @@ if (typeof local === "function") {
 /* Render the sidebar for the first time, then ensure we update the active menu
  * item whenever the router handles a navigation event. */
 sidebarView.render();
-router.on("route", function(route) {
+router.bind("route", function(route) {
     var activeItems   = sidebar.items.where({ active: true }),
         newActiveItem = sidebar.items.findWhere({ route: route });
 

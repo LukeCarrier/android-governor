@@ -18,13 +18,8 @@ var SidebarItemView = Backbone.View.extend({
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
 
-        if (this.model.get("active")) {
-            this.$el.addClass("active");
-        }
-
-        if (this.model.get("brand")) {
-            this.$el.addClass("brand");
-        }
+        this.$el.toggleClass("active", this.model.get("active"));
+        this.$el.toggleClass("brand",  this.model.get("brand"));
 
         return this;
     }
