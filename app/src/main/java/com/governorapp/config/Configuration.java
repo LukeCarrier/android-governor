@@ -13,6 +13,7 @@ import org.w3c.dom.NodeList;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.Map;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -26,7 +27,7 @@ public class Configuration {
     /**
      * Request routing table.
      */
-    protected HashMap<String, Route> routingTable;
+    protected Map<String, Route> routingTable;
 
     /**
      * The enabled state of CORS.
@@ -99,7 +100,7 @@ public class Configuration {
      *
      * @return
      */
-    public HashMap<String, Route> getRoutes() {
+    public Map<String, Route> getRoutes() {
         return routingTable;
     }
 
