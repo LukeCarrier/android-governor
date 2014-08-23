@@ -5,7 +5,7 @@
     </server>
 
     <routes>
-        <!-- Static assets for the user interface -->
+        <!-- User interface -->
         <asset file="/htdocs/index.html" mimetype="text/html" path="/" />
         <asset file="/htdocs/css/all.min.css" mimetype="text/css" path="/css/all.min.css" />
         <asset file="/htdocs/js/governor.min.js" mimetype="text/javascript" path="/js/governor.min.js" />
@@ -13,7 +13,10 @@
         <asset file="/htdocs/js/ie.min.js" mimetype="text/javascript" path="/js/ie.min.js" />
         <asset file="/htdocs/js/ie.min.js.map" mimetype="application/octet-stream" path="/js/ie.min.js.map" />
 
-        <!-- SystemController route -->
+        <!-- MessagingController -->
+        <method controller="Messaging" method="getThreads" path="/messaging/threads" verb="get" />
+
+        <!-- SystemController -->
         <method controller="System" method="getBuild" path="/system/build" verb="get" />
     </routes>
 </governor-config>
