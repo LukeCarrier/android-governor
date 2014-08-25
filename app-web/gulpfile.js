@@ -21,6 +21,7 @@ var paths = {
     builtHtml: "out",
 
     scriptGovernor: "./script/index.js", // must be relative for Browserify
+    scriptLocal:    "script/local.js",   // additional local configuration
     scriptVendorIe: [
         "bower_components/html5shiv/dist/html5shiv.js",
         "bower_components/respond/dest/respond.src.js"
@@ -58,22 +59,6 @@ function sourceScript(srcPath, targetPath) {
                    .pipe(sourcemaps.write(paths.builtScriptSourcemap));
 }
 
-/**
- * Source a set of paths and return a browserify or object.
- *
- * @param string  srcPath
- * @param boolean useWatchify
- */
-function sourceScriptBrowserify(srcPath) {
-    return browserify({
-        cache:        {},
-        debug:        true,
-        entries:      [srcPath],
-        fullPaths:    true,
-        packageCache: {}
-    });
-}
-
 function processScript(stream) {
     stream.pipe(gulp.dest(paths.builtScript));
 
@@ -105,10 +90,10 @@ gulp.task("html", function() {
  * Cross-browser script (via Browserify)
  */
 gulp.task("script", function() {
-    var browserifyer = sourceScriptBrowserify(paths.scriptGovernor),
-        stream       = browserifyer.bundle().pipe(source(paths.builtScriptGovernor));
+    var bundler = browserify(paths.scriptGovernor),
+        stream  = bundler.bundle().pipe(source(paths.builtScriptGovernor));
 
-    if (fs.readFileSync("script/local.js").toString() !== '') {
+    if (fs.readFileSync(paths.scriptLocal).toString() !== "") {
         util.log(util.colors.red("modified local.js found") + " -- don't ship this build to production!");
     }
 
@@ -119,14 +104,15 @@ gulp.task("script", function() {
  * Cross-browser script (via Watchify).
  */
 gulp.task("script-watch", function() {
-    var browserifyer = sourceScriptBrowserify(paths.scriptGovernor, true),
-        watchifyer   = watchify(browserifyer);
+    var bundler = watchify(browserify(paths.scriptGovernor, watchify.args));
 
-    watchifyer.on("update", function() {
-        var stream = watchifyer.bundle().pipe(source(paths.builtScriptGovernor));
+    bundler.on("update", function() {
+        util.log(util.colors.cyan("'script-watch'") + " handled change");
+        var stream = bundler.bundle()
+                            .on("error", util.log.bind(util, "Browserify error"))
+                            .pipe(source(paths.builtScriptGovernor));
         processScript(stream);
     });
-
 });
 
 /*
