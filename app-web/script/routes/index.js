@@ -1,5 +1,6 @@
-var _    = require("underscore"),
-    home = require("./home");
+var _         = require("underscore"),
+    home      = require("./home"),
+    messaging = require("./messaging");
 
 /**
  * Initialise routes.
@@ -20,7 +21,8 @@ var _    = require("underscore"),
  */
 function initialize(router, sidebar, contentView) {
     var routes = {
-        home: home
+        home:      home,
+        messaging: messaging
     };
 
     _.each(routes, function(route) {
