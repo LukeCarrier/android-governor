@@ -82,15 +82,35 @@ var TableView = Backbone.View.extend({
         throw new Error("getRow(model) must be implemented in a subclass");
     },
 
+    handleAdd: function(model) {
+        this.$el.find("tbody").append(this.renderRow(model));
+    },
+
+    handleRemove: function() {
+        console.log("[TableView handleAdd] unimplemented! arguments = ", arguments);
+    },
+
+    handleReset: function() {
+        console.log("[TableView handleAdd] unimplemented! arguments = ", arguments);
+    },
+
     /**
      * Initialiser.
      *
-     * Set up a handler for change events on the model.
+     * Set up handlers for various change events on the model.
      *
      * @return void
      */
     initialize: function() {
-        this.model.bind("change", this.render, this);
+        if (this.model instanceof Backbone.Collection) {
+            this.listenTo(this.model, "add",    this.handleAdd);
+            this.listenTo(this.model, "remove", this.handleRemove);
+            this.listenTo(this.model, "reset",  this.handleReset);
+        } else if (this.model instanceof Backbone.Model) {
+            this.listenTo(this.model, "change", this.render, this);
+        } else {
+            throw new Error("initialize() expects either Backbone.Collection or Backbone.Model");
+        }
     },
 
     /**
@@ -117,9 +137,9 @@ var TableView = Backbone.View.extend({
         var bodyHtml;
 
         if (this.model instanceof Backbone.Collection) {
-            bodyHtml = this.model.map(_.bind(this.renderRow, this));
+            bodyHtml = this.model.models.map(this.renderRow, this);
         } else if (this.model instanceof Backbone.Model) {
-            bodyHtml = _.map(this.model.pairs(), _.bind(this.renderRow, this));
+            bodyHtml = _.map(this.model.pairs(), this.renderRow, this);
         } else {
             throw new Error("renderBody() expects either Backbone.Collection or Backbone.Model");
         }
