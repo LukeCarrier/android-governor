@@ -87,11 +87,11 @@ var TableView = Backbone.View.extend({
     },
 
     handleRemove: function() {
-        console.log("[TableView handleAdd] unimplemented! arguments = ", arguments);
+        console.log("[TableView handleRemove] unimplemented! arguments = ", arguments);
     },
 
     handleReset: function() {
-        console.log("[TableView handleAdd] unimplemented! arguments = ", arguments);
+        console.log("[TableView handleReset] unimplemented! arguments = ", arguments);
     },
 
     /**
