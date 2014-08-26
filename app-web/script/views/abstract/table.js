@@ -82,14 +82,31 @@ var TableView = Backbone.View.extend({
         throw new Error("getRow(model) must be implemented in a subclass");
     },
 
+    /**
+     * Handle the addition of a model to the collection.
+     *
+     * @param Backbone.Model model The model object.
+     *
+     * @return void
+     */
     handleAdd: function(model) {
         this.$el.find("tbody").append(this.renderRow(model));
     },
 
+    /**
+     * Handle the removal of a model from the collection.
+     *
+     * @return void
+     */
     handleRemove: function() {
         console.log("[TableView handleRemove] unimplemented! arguments = ", arguments);
     },
 
+    /**
+     * Handle the collection being res.
+     *
+     * @return void
+     */
     handleReset: function() {
         console.log("[TableView handleReset] unimplemented! arguments = ", arguments);
     },
