@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import com.governorapp.config.Configuration;
-import com.governorapp.model.MessageThread;
+import com.governorapp.model.Message;
 import com.governorapp.server.Controller;
 
 import java.util.ArrayList;
@@ -19,8 +19,12 @@ import fi.iki.elonen.NanoHTTPD;
  * Allows sending and reading SMS messages.
  */
 public class MessagingController extends AbstractController implements Controller {
+    protected Uri smsContentUri;
+
     public MessagingController(Context appContext, Configuration config) {
         super(appContext, config);
+
+        smsContentUri = Uri.parse("content://sms/inbox");
     }
 
     /**
@@ -32,13 +36,13 @@ public class MessagingController extends AbstractController implements Controlle
      * @return
      */
     public NanoHTTPD.Response getThreads() {
-        Uri uri = Uri.parse("content://sms/inbox");
-        Cursor cursor = appContext.getContentResolver().query(uri, null, null, null, null);
+        String select = "1 = 1) GROUP BY (" + Message.fieldMap.get("personId");
+        Cursor cursor = appContext.getContentResolver().query(this.smsContentUri, null, select, null, null);
 
-        List<MessageThread> threads = new ArrayList<MessageThread>();
-        MessageThread thread;
+        List<Message> threads = new ArrayList<Message>();
+        Message thread;
         while (cursor.moveToNext()) {
-            thread = MessageThread.fromCursor(cursor);
+            thread = Message.fromCursor(cursor);
             threads.add(thread);
         }
 

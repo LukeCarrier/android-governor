@@ -7,12 +7,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Messaging thread.
+ * Message.
  *
  * This model represents data straight out of the Android telephony provider. It is very likely that
  * this code has been modified from device to device.
+ *
+ * We reuse this same class for both threads of messages and individual messages. We might need to
+ * revisit using two separate classes when we integrate contacts again.
  */
-public class MessageThread {
+public class Message {
+    /**
+     * Map of our fields to fields in the Cursor.
+     */
     public static final Map<String, String> fieldMap;
 
     /**
@@ -100,6 +106,9 @@ public class MessageThread {
      */
     public int type;
 
+    /**
+     * Class initializer.
+     */
     static {
         Map<String, String> tempFieldMap = new HashMap<String, String>();
 
@@ -123,33 +132,26 @@ public class MessageThread {
         fieldMap = Collections.unmodifiableMap(tempFieldMap);
     }
 
-    /**
-     * Model a thread retrieved directly from a DB cursor.
-     *
-     * @param cursor The cursor object from which to retrieve values.
-     *
-     * @return A populated model object.
-     */
-    public static MessageThread fromCursor(Cursor cursor) {
-        MessageThread thread = new MessageThread();
+    public static Message fromCursor(Cursor cursor) {
+        Message message = new Message();
 
-        thread.id = cursor.getInt(cursor.getColumnIndex(fieldMap.get("id")));
-        thread.address = cursor.getString(cursor.getColumnIndex(fieldMap.get("address")));
-        thread.body = cursor.getString(cursor.getColumnIndex(fieldMap.get("body")));
-        thread.date = cursor.getInt(cursor.getColumnIndex(fieldMap.get("date")));
-        thread.dateSent = cursor.getInt(cursor.getColumnIndex(fieldMap.get("dateSent")));
-        thread.errorCode = cursor.getInt(cursor.getColumnIndex(fieldMap.get("errorCode")));
-        thread.locked = cursor.getInt(cursor.getColumnIndex(fieldMap.get("locked")));
-        thread.personId = cursor.getInt(cursor.getColumnIndex(fieldMap.get("personId")));
-        thread.protocol = cursor.getInt(cursor.getColumnIndex(fieldMap.get("protocol")));
-        thread.read = cursor.getInt(cursor.getColumnIndex(fieldMap.get("read"))) == 1;
-        thread.replyPathPresent = cursor.getInt(cursor.getColumnIndex(fieldMap.get("replyPathPresent")));
-        thread.seen = cursor.getInt(cursor.getColumnIndex(fieldMap.get("seen")));
-        thread.serviceCenter = cursor.getString(cursor.getColumnIndex(fieldMap.get("serviceCenter")));
-        thread.status = cursor.getInt(cursor.getColumnIndex(fieldMap.get("status")));
-        thread.subject = cursor.getString(cursor.getColumnIndex(fieldMap.get("subject")));
-        thread.type = cursor.getInt(cursor.getColumnIndex(fieldMap.get("type")));
+        message.id = cursor.getInt(cursor.getColumnIndex(fieldMap.get("id")));
+        message.address = cursor.getString(cursor.getColumnIndex(fieldMap.get("address")));
+        message.body = cursor.getString(cursor.getColumnIndex(fieldMap.get("body")));
+        message.date = cursor.getInt(cursor.getColumnIndex(fieldMap.get("date")));
+        message.dateSent = cursor.getInt(cursor.getColumnIndex(fieldMap.get("dateSent")));
+        message.errorCode = cursor.getInt(cursor.getColumnIndex(fieldMap.get("errorCode")));
+        message.locked = cursor.getInt(cursor.getColumnIndex(fieldMap.get("locked")));
+        message.personId = cursor.getInt(cursor.getColumnIndex(fieldMap.get("personId")));
+        message.protocol = cursor.getInt(cursor.getColumnIndex(fieldMap.get("protocol")));
+        message.read = cursor.getInt(cursor.getColumnIndex(fieldMap.get("read"))) == 1;
+        message.replyPathPresent = cursor.getInt(cursor.getColumnIndex(fieldMap.get("replyPathPresent")));
+        message.seen = cursor.getInt(cursor.getColumnIndex(fieldMap.get("seen")));
+        message.serviceCenter = cursor.getString(cursor.getColumnIndex(fieldMap.get("serviceCenter")));
+        message.status = cursor.getInt(cursor.getColumnIndex(fieldMap.get("status")));
+        message.subject = cursor.getString(cursor.getColumnIndex(fieldMap.get("subject")));
+        message.type = cursor.getInt(cursor.getColumnIndex(fieldMap.get("type")));
 
-        return thread;
+        return message;
     }
 }
