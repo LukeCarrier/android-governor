@@ -12,7 +12,7 @@ import java.util.Map;
  * This model represents data straight out of the Android telephony provider. It is very likely that
  * this code has been modified from device to device.
  */
-public class MessagingThread {
+public class MessageThread {
     public static final Map<String, String> fieldMap;
 
     /**
@@ -123,8 +123,8 @@ public class MessagingThread {
         fieldMap = Collections.unmodifiableMap(tempFieldMap);
     }
 
-    public static MessagingThread fromCursor(Cursor cursor) {
-        MessagingThread thread = new MessagingThread();
+    public static MessageThread fromCursor(Cursor cursor) {
+        MessageThread thread = new MessageThread();
 
         thread.id = cursor.getInt(cursor.getColumnIndex(fieldMap.get("id")));
         thread.address = cursor.getString(cursor.getColumnIndex(fieldMap.get("address")));

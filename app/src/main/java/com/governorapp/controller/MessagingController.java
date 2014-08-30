@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import com.governorapp.config.Configuration;
-import com.governorapp.model.MessagingThread;
+import com.governorapp.model.MessageThread;
 import com.governorapp.server.Controller;
 
 import java.util.ArrayList;
@@ -35,10 +35,10 @@ public class MessagingController extends AbstractController implements Controlle
         Uri uri = Uri.parse("content://sms/inbox");
         Cursor cursor = appContext.getContentResolver().query(uri, null, null, null, null);
 
-        List<MessagingThread> threads = new ArrayList<MessagingThread>();
-        MessagingThread thread;
+        List<MessageThread> threads = new ArrayList<MessageThread>();
+        MessageThread thread;
         while (cursor.moveToNext()) {
-            thread = MessagingThread.fromCursor(cursor);
+            thread = MessageThread.fromCursor(cursor);
             threads.add(thread);
         }
 
