@@ -123,6 +123,13 @@ public class MessageThread {
         fieldMap = Collections.unmodifiableMap(tempFieldMap);
     }
 
+    /**
+     * Model a thread retrieved directly from a DB cursor.
+     *
+     * @param cursor The cursor object from which to retrieve values.
+     *
+     * @return A populated model object.
+     */
     public static MessageThread fromCursor(Cursor cursor) {
         MessageThread thread = new MessageThread();
 
