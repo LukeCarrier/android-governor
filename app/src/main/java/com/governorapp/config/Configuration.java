@@ -1,6 +1,7 @@
 package com.governorapp.config;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.governorapp.config.route.AssetRoute;
 import com.governorapp.config.route.MethodRoute;
@@ -13,7 +14,10 @@ import org.w3c.dom.NodeList;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -25,9 +29,14 @@ import javax.xml.xpath.XPathFactory;
  */
 public class Configuration {
     /**
-     * Request routing table.
+     * Request routing table (dynamic routes).
      */
-    protected Map<String, Route> routingTable;
+    private Map<String, Route> dynamicRoutes;
+
+    /**
+     * Request routing table (static routes).
+     */
+    private Map<String, Route> staticRoutes;
 
     /**
      * The enabled state of CORS.
@@ -48,17 +57,28 @@ public class Configuration {
      * Constructor.
      */
     public Configuration() {
-        routingTable = new HashMap<String, Route>();
+        dynamicRoutes = new HashMap<String, Route>();
+        staticRoutes = new HashMap<String, Route>();
     }
 
     /**
-     * Add a route.
+     * Add a dynamic route.
+     *
+     * @param path  The (valid regular expression) path to respond to.
+     * @param route The route to respond with.
+     */
+    public void addDynamicRoute(String path, Route route) {
+        this.dynamicRoutes.put(path, route);
+    }
+
+    /**
+     * Add a static route.
      *
      * @param path  The path to respond to.
      * @param route The route to respond with.
      */
-    public void addRoute(String path, Route route) {
-        this.routingTable.put(path, route);
+    public void addStaticRoute(String path, Route route) {
+        this.staticRoutes.put(path, route);
     }
 
     /**
@@ -85,23 +105,27 @@ public class Configuration {
      * @param path The path we're responding to.
      * @return The corresponding route.
      */
-    public Route getRoute(String path) throws IOException {
-        Route route = this.routingTable.get(path);
+    public Route resolveRoute(String path) throws IOException {
+        Route route = this.staticRoutes.get(path);
 
-        if (route == null) {
-            throw new IOException();
+        if (route != null) {
+            return route;
         }
 
-        return route;
-    }
+        Iterator<Map.Entry<String, Route>> iterator = this.dynamicRoutes.entrySet().iterator();
+        Map.Entry<String, Route> entry;
 
-    /**
-     * Get the routing table.
-     *
-     * @return
-     */
-    public Map<String, Route> getRoutes() {
-        return routingTable;
+        while (iterator.hasNext()) {
+            entry = iterator.next();
+            Pattern pattern = Pattern.compile(entry.getKey());
+            Matcher matcher = pattern.matcher(path);
+
+            if (matcher.matches()) {
+                return entry.getValue();
+            }
+        }
+
+        throw new IOException();
     }
 
     /**
@@ -154,22 +178,37 @@ public class Configuration {
             Node routeNode = routes.item(i);
             NamedNodeMap routeNodeAttrs = routeNode.getAttributes();
             String routeNodeName = routeNode.getNodeName();
+
             String routePath = routeNodeAttrs.getNamedItem("path").getNodeValue();
+            String routeController;
+            String routeMethod;
+            String routeVerb;
+
+            RouteParser routeParser;
 
             Route route;
 
             if (routeNodeName.equals("asset")) {
                 route = new AssetRoute(routeNodeAttrs.getNamedItem("file").getNodeValue(),
                         routeNodeAttrs.getNamedItem("mimetype").getNodeValue());
+
+                addStaticRoute(routePath, route);
             } else if (routeNodeName.equals("method")) {
-                route = new MethodRoute(routeNodeAttrs.getNamedItem("controller").getNodeValue(),
-                        routeNodeAttrs.getNamedItem("method").getNodeValue(),
-                        routeNodeAttrs.getNamedItem("verb").getNodeValue());
+                routeController = routeNodeAttrs.getNamedItem("controller").getNodeValue();
+                routeMethod = routeNodeAttrs.getNamedItem("method").getNodeValue();
+                routeVerb = routeNodeAttrs.getNamedItem("verb").getNodeValue();
+
+                route = new MethodRoute(routeController, routeMethod, routeVerb);
+
+                routeParser = new RouteParser(routePath);
+                if (routeParser.isDynamic()) {
+                    addDynamicRoute(routeParser.getPathRegex(), route);
+                } else {
+                    addStaticRoute(routePath, route);
+                }
             } else {
                 throw new InputMismatchException();
             }
-
-            addRoute(routePath, route);
         }
     }
 }

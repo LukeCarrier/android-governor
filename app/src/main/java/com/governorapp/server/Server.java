@@ -29,7 +29,7 @@ public class Server extends NanoHTTPD {
         Response response;
 
         try {
-            Route route = config.getRoute(path);
+            Route route = config.resolveRoute(path);
             response = route.getResponse(appContext, config, session);
         } catch (IOException e) {
             response = new Response(Response.Status.NOT_FOUND, MIME_PLAINTEXT, "404 Not Found");
