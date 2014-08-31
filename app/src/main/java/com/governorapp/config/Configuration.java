@@ -35,7 +35,7 @@ public class Configuration {
      * If enabled, CORS will cause a header containing "access-control-allow-origin: *" to be sent
      * with responses.
      */
-    protected boolean enable_cors;
+    protected boolean enableCors;
 
     /**
      * Server's port number.
@@ -67,16 +67,16 @@ public class Configuration {
      * @return The enabled status of CORS.
      */
     public boolean getEnableCors() {
-        return enable_cors;
+        return enableCors;
     }
 
     /**
      * Set the enabled state of CORS.
      *
-     * @param enable_cors The enabled state of CORS.
+     * @param enableCors The enabled state of CORS.
      */
-    public void setEnableCors(boolean enable_cors) {
-        this.enable_cors = enable_cors;
+    public void setEnableCors(boolean enableCors) {
+        this.enableCors = enableCors;
     }
 
     /**
