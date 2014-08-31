@@ -22,7 +22,7 @@ which the server delivers to browsers.
 
 The application can be built easily -- just run the Gradle wrapper script:
 
-    $ ./gradlew
+    $ ./gradlew assemble
 
 The web interface is easy to build independently of the overall application -- the dependencies can
 be fetched like so:
