@@ -13,6 +13,13 @@ Governor is an attempt at providing Android users with a web-based portal to int
 phones. At the moment, it's in a "seedling" stage and is starting to provide a base framework for
 working with HTTP requests. It's not yet capable of any meaningful device management.
 
+Obtaining
+---------
+
+No stable release of Governor exists at the present time, so the application is not listed on the
+Google Play Store. We have a Google Group allowing access to unstable development pre-releases. For
+access to this list, drop an email to @LukeCarrier.
+
 Building
 --------
 
