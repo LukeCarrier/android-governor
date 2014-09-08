@@ -8,10 +8,10 @@ import java.util.Map;
 
 /**
  * Message.
- *
+ * <p/>
  * This model represents data straight out of the Android telephony provider. It is very likely that
  * this code has been modified from device to device.
- *
+ * <p/>
  * We reuse this same class for both threads of messages and individual messages. We might need to
  * revisit using two separate classes when we integrate contacts again.
  */
@@ -28,7 +28,7 @@ public class Message {
 
     /**
      * Address (phone number).
-     *
+     * <p/>
      * Stored as a string to prevent modifications to the numbers.
      */
     public String address;
@@ -100,7 +100,7 @@ public class Message {
 
     /**
      * Message type (folder) flag.
-     *
+     * <p/>
      * -> 1 = incoming (inbox)
      * -> 2 = outgoing (sent)
      */
