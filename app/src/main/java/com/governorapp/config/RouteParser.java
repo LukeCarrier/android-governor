@@ -27,21 +27,28 @@ public class RouteParser {
     private final static Map<String, String> typeRegexMap;
 
     /**
+     * Map of type aliases to Java type classes.
+     */
+    private final static Map<String, Class<?>> typeTypeMap;
+
+    /**
      * Class initializer.
      */
     static {
         Map<String, String> tmpTypeRegexMap = new HashMap<String, String>();
+        Map<String, Class<?>> tmpTypeTypeMap = new HashMap<String, Class<?>>();
 
         tmpTypeRegexMap.put("integer", "[0-9]+");
+        tmpTypeTypeMap.put("integer", Integer.class);
 
         typeRegexMap = tmpTypeRegexMap;
+        typeTypeMap = tmpTypeTypeMap;
     }
 
     /**
      * The route's original path.
      */
     private final String path;
-
     /**
      * The matcher.
      */
@@ -82,6 +89,20 @@ public class RouteParser {
             match = matcher.group(1);
             parts = match.split(":");
             result = result.replace(match, "(" + typeRegexMap.get(parts[0]) + ")");
+        }
+
+        return result;
+    }
+
+    public Map<String, Class<?>> getParameters() {
+        Map<String, Class<?>> result = new HashMap<String, Class<?>>();
+        String[] parts;
+
+        matcher.reset();
+
+        while (matcher.find()) {
+            parts = matcher.group(1).split(":");
+            result.put(parts[1], typeTypeMap.get(parts[0]));
         }
 
         return result;

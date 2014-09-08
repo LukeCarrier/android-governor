@@ -1,7 +1,6 @@
 package com.governorapp.config;
 
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.governorapp.config.route.AssetRoute;
 import com.governorapp.config.route.MethodRoute;
@@ -184,27 +183,28 @@ public class Configuration {
             String routeMethod;
             String routeVerb;
 
+
             RouteParser routeParser;
 
-            Route route;
-
             if (routeNodeName.equals("asset")) {
-                route = new AssetRoute(routeNodeAttrs.getNamedItem("file").getNodeValue(),
-                        routeNodeAttrs.getNamedItem("mimetype").getNodeValue());
-
-                addStaticRoute(routePath, route);
+                addStaticRoute(routePath, new AssetRoute(routeNodeAttrs.getNamedItem("file").getNodeValue(),
+                                                         routeNodeAttrs.getNamedItem("mimetype").getNodeValue()));
             } else if (routeNodeName.equals("method")) {
                 routeController = routeNodeAttrs.getNamedItem("controller").getNodeValue();
                 routeMethod = routeNodeAttrs.getNamedItem("method").getNodeValue();
                 routeVerb = routeNodeAttrs.getNamedItem("verb").getNodeValue();
 
-                route = new MethodRoute(routeController, routeMethod, routeVerb);
-
                 routeParser = new RouteParser(routePath);
                 if (routeParser.isDynamic()) {
-                    addDynamicRoute(routeParser.getPathRegex(), route);
+                    Map<String,Class<?>> parameters = routeParser.getParameters();
+
+                    addDynamicRoute(routeParser.getPathRegex(), new MethodRoute(routeController,
+                                                                                routeMethod,
+                                                                                routeVerb,
+                                                                                parameters));
                 } else {
-                    addStaticRoute(routePath, route);
+                    addStaticRoute(routePath, new MethodRoute(routeController, routeMethod,
+                                                              routeVerb));
                 }
             } else {
                 throw new InputMismatchException();
