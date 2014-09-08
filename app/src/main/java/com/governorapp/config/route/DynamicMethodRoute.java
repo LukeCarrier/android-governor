@@ -12,6 +12,8 @@ import com.governorapp.server.ControllerFactory;
 
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import fi.iki.elonen.NanoHTTPD;
 
@@ -60,12 +62,28 @@ public class DynamicMethodRoute implements Route {
         this.parameters = parameters;
     }
 
-    private Object[] getParameterValues(NanoHTTPD.IHTTPSession session, Class[] parameterTypes) {
-        Object[] result = new Object[parameterTypes.length];
+    /**
+     * Extract parameter values from the URI.
+     *
+     * @param uri            The request URI.
+     * @param parameterTypes The types of the parameters to extract.
+     * @return
+     */
+    private Object[] getParameterValues(String uri, Class[] parameterTypes) {
+        Object[] parameterValues = new Object[parameterTypes.length];
 
-        String[] uriParts = session.getUri().split("/");
+        Pattern pattern = Pattern.compile(routePathRegex);
+        Matcher matcher = pattern.matcher(uri);
 
-        return result;
+        int i = 0;
+        while (matcher.find()) {
+            if (parameterTypes[i] == Integer.class) {
+                parameterValues[i] = Integer.valueOf(matcher.group(i + 1));
+            }
+            i++;
+        }
+
+        return parameterValues;
     }
 
     /**
@@ -85,7 +103,7 @@ public class DynamicMethodRoute implements Route {
             Controller controller = controllerPair.getController();
 
             Class[] parameterTypes = parameters.values().toArray(new Class[parameters.size()]);
-            Object[] parameterValues = getParameterValues(session, parameterTypes);
+            Object[] parameterValues = getParameterValues(session.getUri(), parameterTypes);
             Method controllerMethod = controllerClass.getDeclaredMethod(method, parameterTypes);
 
             return (NanoHTTPD.Response) controllerMethod.invoke(controller, parameterValues);
