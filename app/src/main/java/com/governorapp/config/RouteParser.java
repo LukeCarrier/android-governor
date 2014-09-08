@@ -1,22 +1,19 @@
 package com.governorapp.config;
 
-import android.util.Log;
-
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * Route parser.
- * 
+ * <p/>
  * Parses out dynamic components from a path.
  */
 public class RouteParser {
     /**
      * Used to extract dynamic components of a URL.
-     *
+     * <p/>
      * /messaging/threads/{integer:personId}
      */
     private final static Pattern pattern = Pattern.compile("([a-z]+:[a-zA-Z]+)");

@@ -3,6 +3,7 @@ package com.governorapp.config;
 import android.content.SharedPreferences;
 
 import com.governorapp.config.route.AssetRoute;
+import com.governorapp.config.route.DynamicMethodRoute;
 import com.governorapp.config.route.MethodRoute;
 
 import org.w3c.dom.Document;
@@ -28,16 +29,6 @@ import javax.xml.xpath.XPathFactory;
  */
 public class Configuration {
     /**
-     * Request routing table (dynamic routes).
-     */
-    private Map<String, Route> dynamicRoutes;
-
-    /**
-     * Request routing table (static routes).
-     */
-    private Map<String, Route> staticRoutes;
-
-    /**
      * The enabled state of CORS.
      * <p/>
      * If enabled, CORS will cause a header containing "access-control-allow-origin: *" to be sent
@@ -51,6 +42,16 @@ public class Configuration {
      * The port number must be above 1024, as we won't run as a privileged application.
      */
     protected int port;
+
+    /**
+     * Request routing table (dynamic routes).
+     */
+    private Map<String, Route> dynamicRoutes;
+
+    /**
+     * Request routing table (static routes).
+     */
+    private Map<String, Route> staticRoutes;
 
     /**
      * Constructor.
@@ -182,13 +183,13 @@ public class Configuration {
             String routeController;
             String routeMethod;
             String routeVerb;
-
+            String routePathRegex;
 
             RouteParser routeParser;
 
             if (routeNodeName.equals("asset")) {
                 addStaticRoute(routePath, new AssetRoute(routeNodeAttrs.getNamedItem("file").getNodeValue(),
-                                                         routeNodeAttrs.getNamedItem("mimetype").getNodeValue()));
+                        routeNodeAttrs.getNamedItem("mimetype").getNodeValue()));
             } else if (routeNodeName.equals("method")) {
                 routeController = routeNodeAttrs.getNamedItem("controller").getNodeValue();
                 routeMethod = routeNodeAttrs.getNamedItem("method").getNodeValue();
@@ -196,15 +197,17 @@ public class Configuration {
 
                 routeParser = new RouteParser(routePath);
                 if (routeParser.isDynamic()) {
-                    Map<String,Class<?>> parameters = routeParser.getParameters();
+                    routePathRegex = routeParser.getPathRegex();
+                    Map<String, Class<?>> parameters = routeParser.getParameters();
 
-                    addDynamicRoute(routeParser.getPathRegex(), new MethodRoute(routeController,
-                                                                                routeMethod,
-                                                                                routeVerb,
-                                                                                parameters));
+                    addDynamicRoute(routePathRegex, new DynamicMethodRoute(routeController,
+                            routeMethod,
+                            routeVerb,
+                            routePathRegex,
+                            parameters));
                 } else {
                     addStaticRoute(routePath, new MethodRoute(routeController, routeMethod,
-                                                              routeVerb));
+                            routeVerb));
                 }
             } else {
                 throw new InputMismatchException();

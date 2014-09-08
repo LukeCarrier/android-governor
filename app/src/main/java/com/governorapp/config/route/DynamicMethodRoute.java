@@ -11,13 +11,14 @@ import com.governorapp.server.ControllerClassObjectPair;
 import com.governorapp.server.ControllerFactory;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 
 import fi.iki.elonen.NanoHTTPD;
 
 /**
- * Method route.
+ * Dynamic method route.
  */
-public class MethodRoute implements Route {
+public class DynamicMethodRoute implements Route {
     /**
      * Controller name.
      */
@@ -34,16 +35,37 @@ public class MethodRoute implements Route {
     protected String verb;
 
     /**
-     * Constructor.
+     * Regular expression for the route.
+     */
+    protected String routePathRegex;
+
+    /**
+     * Method parameters.
+     */
+    private Map<String, Class<?>> parameters;
+
+    /**
+     * Constructor (with parameters).
      *
      * @param controller The name of the controller.
      * @param method     The name of the method.
      * @param verb       The HTTP verb.
+     * @param parameters The parameters to pass to the method.
      */
-    public MethodRoute(String controller, String method, String verb) {
+    public DynamicMethodRoute(String controller, String method, String verb, String routePathRegex, Map<String, Class<?>> parameters) {
         this.controller = controller;
         this.method = method;
         this.verb = verb;
+        this.routePathRegex = routePathRegex;
+        this.parameters = parameters;
+    }
+
+    private Object[] getParameterValues(NanoHTTPD.IHTTPSession session, Class[] parameterTypes) {
+        Object[] result = new Object[parameterTypes.length];
+
+        String[] uriParts = session.getUri().split("/");
+
+        return result;
     }
 
     /**
@@ -61,9 +83,12 @@ public class MethodRoute implements Route {
 
             Class<?> controllerClass = controllerPair.getCls();
             Controller controller = controllerPair.getController();
-            Method controllerMethod = controllerClass.getDeclaredMethod(method);
 
-            return (NanoHTTPD.Response) controllerMethod.invoke(controller);
+            Class[] parameterTypes = parameters.values().toArray(new Class[parameters.size()]);
+            Object[] parameterValues = getParameterValues(session, parameterTypes);
+            Method controllerMethod = controllerClass.getDeclaredMethod(method, parameterTypes);
+
+            return (NanoHTTPD.Response) controllerMethod.invoke(controller, parameterValues);
         } catch (Exception e) {
             if (BuildConfig.DEBUG) {
                 Log.e("com.governorapp", "exception when executing method", e);
