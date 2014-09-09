@@ -1,4 +1,4 @@
-var Backbone = require("backbone"),
+var Backbone        = require("backbone"),
     MessagingThread = require("./messaging-thread");
 
 var MessagingThreads = Backbone.Collection.extend({

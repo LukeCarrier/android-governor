@@ -1,13 +1,12 @@
 var TableView = require("./abstract/table");
 
-var MessagingThreadsView = TableView.extend({
+var MessagingThreadView = TableView.extend({
     /**
      * @override TableView
      */
     getHead: function() {
         return [
             [
-                "Number",
                 "Message"
             ]
         ];
@@ -18,10 +17,10 @@ var MessagingThreadsView = TableView.extend({
      */
     getRow: function(row) {
         return [
-            '<a href="' + row.viewUrl() + '">' + row.get("address") + "</a>",
+            row.get("address"),
             row.get("body")
         ];
     }
 });
 
-module.exports = MessagingThreadsView;
+module.exports = MessagingThreadView;
