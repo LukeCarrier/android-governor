@@ -77,8 +77,7 @@ gulp.task("clean", function(cb) {
  */
 gulp.task("html", function() {
     var minifyOptions = {
-        comments: true,    // just until the conditionals option is fixed
-        conditionals: true
+        comments: true // minimize hangs the build if we enable conditionals
     };
 
     return gulp.src(paths.html)
