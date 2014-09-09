@@ -103,7 +103,7 @@ var TableView = Backbone.View.extend({
     },
 
     /**
-     * Handle the collection being res.
+     * Handle the collection being reset.
      *
      * @return void
      */
