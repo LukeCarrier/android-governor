@@ -1,5 +1,6 @@
 /* Prepare our dependencies as early on as possible. */
-var $        = require("jquery"),
+var $        = require("jquery")
+    _        = require("underscore"),
     Backbone = require("backbone");
 
 /* Instruct Backbone to use this jQuery instance, else calls to $el in our views
@@ -32,7 +33,8 @@ if (typeof local === "function") {
 sidebarView.render();
 router.bind("route", function(route) {
     var activeItems   = sidebar.items.where({ active: true }),
-        newActiveItem = sidebar.items.findWhere({ route: route });
+        routeModule   = _.first(route.split(":")),
+        newActiveItem = sidebar.items.findWhere({ route: routeModule });
 
     activeItems.map(function(item) {
         item.set("active", false);
