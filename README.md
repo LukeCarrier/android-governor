@@ -9,6 +9,16 @@ Like AirDroid, but with freedomsauce.
 
 * * *
 
+No longer maintained
+--------------------
+
+This project isn't actively developed or maintained any more, nor is it likely to become
+actively developed in the future. You're more than welcome to fork it to develop the idea
+further!
+
+Overview
+--------
+
 Governor is an attempt at providing Android users with a web-based portal to interact with their
 phones. At the moment, it's in a "seedling" stage and is starting to provide a base framework for
 working with HTTP requests. It's not yet capable of any meaningful device management.
