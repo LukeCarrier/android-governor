@@ -8,7 +8,7 @@ import com.governorapp.server.Controller;
 import fi.iki.elonen.NanoHTTPD;
 
 /**
- * Created by lidongxu on 17/6/9.
+ * Created by macoli on 17/6/9.
  */
 
 public class OpenBrowserController extends AbstractController implements Controller {

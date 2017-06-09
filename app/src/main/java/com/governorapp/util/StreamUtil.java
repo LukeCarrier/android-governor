@@ -1,7 +1,7 @@
 package com.governorapp.util;
 
 /**
- * Created by lidongxu on 17/1/13.
+ * Created by macoli on 17/1/13.
  */
 
 import java.io.BufferedInputStream;

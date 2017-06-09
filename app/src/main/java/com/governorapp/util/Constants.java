@@ -3,7 +3,7 @@ package com.governorapp.util;
 import android.os.Environment;
 
 /**
- * Created by lidongxu on 17/6/9.
+ * Created by macoli on 17/6/9.
  */
 
 public class Constants {
