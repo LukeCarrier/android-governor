@@ -74,24 +74,23 @@ public class ServerService extends Service {
     }
 
     private Notification buildNotification(){
-        // 在API11之后构建Notification的方式
         Notification.Builder builder = new Notification.Builder(this.getApplicationContext()); //获取一个Notification构造器
         Intent nfIntent = new Intent(this, GovernorActivity.class);
 
         try {
             builder.setContentIntent(PendingIntent.
-                getActivity(this, 0, nfIntent, 0)) // 设置PendingIntent
+                getActivity(this, 0, nfIntent, 0))
                 .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_launcher)) // 设置下拉列表中的图标(大图标)
-                .setContentTitle("Governor has started") // 设置下拉列表里的标题
-                .setSmallIcon(R.drawable.ic_launcher) // 设置状态栏内的小图标
+                .setContentTitle("Governor has started")
+                .setSmallIcon(R.drawable.ic_launcher)
                 .setContentText("http://" + Utils.getDeviceWifiAddress(this) + ":8080") // 设置上下文内容
-                .setWhen(System.currentTimeMillis()); // 设置该通知发生的时间
+                .setWhen(System.currentTimeMillis());
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
 
-        Notification notification = builder.build(); // 获取构建好的Notification
-        notification.defaults = Notification.DEFAULT_SOUND; //设置为默认的声音
+        Notification notification = builder.build();
+        notification.defaults = Notification.DEFAULT_SOUND;
         return notification ;
     }
 
