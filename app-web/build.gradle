@@ -19,4 +19,4 @@ jar {
 }
 
 clean.dependsOn(gulp_clean)
-jar.dependsOn(gulp_default)
+//jar.dependsOn(gulp_default)

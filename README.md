@@ -1,12 +1,6 @@
 Governor
 ========
 
-<p align="center">
-    <img width="256" height="256" src="http://governorapp.com/assets/logo-dark.png">
-</p>
-
-Like AirDroid, but with freedomsauce.
-
 * * *
 
 No longer maintained
