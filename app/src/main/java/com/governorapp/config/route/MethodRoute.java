@@ -61,9 +61,9 @@ public class MethodRoute implements Route {
 
             Class<?> controllerClass = controllerPair.getCls();
             Controller controller = controllerPair.getController();
-            Method controllerMethod = controllerClass.getDeclaredMethod(method);
-
-            return (NanoHTTPD.Response) controllerMethod.invoke(controller);
+//            Method controllerMethod = controllerClass.getDeclaredMethod(method);
+            Method controllerMethod = controllerClass.getDeclaredMethod("doWork", NanoHTTPD.IHTTPSession.class);
+            return (NanoHTTPD.Response) controllerMethod.invoke(controller , session);
         } catch (Exception e) {
             if (BuildConfig.DEBUG) {
                 Log.e("com.governorapp", "exception when executing method", e);

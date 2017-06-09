@@ -10,7 +10,7 @@ import fi.iki.elonen.NanoHTTPD;
 /**
  * Abstract controller.
  */
-public class AbstractController {
+public abstract class AbstractController {
     /**
      * Server configuration.
      */
@@ -31,6 +31,8 @@ public class AbstractController {
         this.appContext = appContext;
         this.config = config;
     }
+
+    abstract protected NanoHTTPD.Response doWork(NanoHTTPD.IHTTPSession session) ;
 
     /**
      * Return a successful response with data, but no errors.

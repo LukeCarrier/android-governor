@@ -17,9 +17,11 @@ import android.widget.TextView;
 import com.governorapp.R;
 import com.governorapp.config.Configuration;
 import com.governorapp.server.Server;
+import com.governorapp.util.Constants;
 
 import org.w3c.dom.Document;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
@@ -75,11 +77,23 @@ public class GovernorActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        initDir() ;
+
         setContentView(R.layout.activity_governor);
 
         appContext = getApplicationContext();
         governor_address = (EditText) findViewById(R.id.governor_address);
         device_wifi_status = (TextView) findViewById(R.id.device_wifi_status);
+    }
+
+    /**
+     * init upload diractionary
+     * */
+    private void initDir(){
+        File uploadFile = new File(Constants.UPLOAD_PATH) ;
+        if (!uploadFile.exists()){
+            uploadFile.mkdirs() ;
+        }
     }
 
     /**

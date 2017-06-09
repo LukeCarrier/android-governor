@@ -6,6 +6,8 @@ import com.governorapp.config.Configuration;
 import com.governorapp.config.Route;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import fi.iki.elonen.NanoHTTPD;
 

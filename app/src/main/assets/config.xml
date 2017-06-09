@@ -19,9 +19,18 @@
         <!-- MessagingController -->
         <method controller="Messaging" method="getMessages"
             path="/messaging/threads/integer:personId" verb="get" />
-        <method controller="Messaging" method="getThreads" path="/messaging/threads" verb="get" />
+        <method controller="Messaging" method="getThreads" path="/messaging/threads"
+            verb="get" />
 
         <!-- SystemController -->
         <method controller="System" method="getBuild" path="/system/build" verb="get" />
+
+        <!-- sync cutting board -->
+        <method controller="SyncCuttingBoard" method="sync"
+            path="/cutting_board" verb="post" />
+        <method controller="OpenBrowser" method="openBroser"
+            path="/open_browser" verb="post" />
+        <method controller="PostFile" method="sync"
+            path="/upload_file_action" verb="post" />
     </routes>
 </governor-config>

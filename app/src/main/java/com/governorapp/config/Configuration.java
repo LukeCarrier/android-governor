@@ -198,13 +198,10 @@ public class Configuration {
                 routeParser = new RouteParser(routePath);
                 if (routeParser.isDynamic()) {
                     routePathRegex = routeParser.getPathRegex();
-                    Map<String, Class<?>> parameters = routeParser.getParameters();
 
                     addDynamicRoute(routePathRegex, new DynamicMethodRoute(routeController,
                             routeMethod,
-                            routeVerb,
-                            routePathRegex,
-                            parameters));
+                            routeVerb));
                 } else {
                     addStaticRoute(routePath, new MethodRoute(routeController, routeMethod,
                             routeVerb));
