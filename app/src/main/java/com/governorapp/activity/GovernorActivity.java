@@ -3,6 +3,7 @@ package com.governorapp.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -83,6 +84,8 @@ public class GovernorActivity extends Activity {
         device_wifi_status = (TextView) findViewById(R.id.device_wifi_status);
 
         ServerService.startServerService(this);
+
+
     }
 
     /**

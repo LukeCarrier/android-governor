@@ -29,7 +29,8 @@
         <activity
             android:name=".activity.SettingsActivity"
             android:label="@string/title_activity_settings"/>
-        <service android:name=".service.ServerService" android:exported="false"/>
+        <activity android:name=".activity.TempActivity"/>
+        <service android:name=".service.ServerService"/>
     </application>
 
 </manifest>

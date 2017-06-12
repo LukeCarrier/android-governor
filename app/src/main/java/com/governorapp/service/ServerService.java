@@ -7,6 +7,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -16,6 +17,8 @@ import android.view.View;
 
 import com.governorapp.R;
 import com.governorapp.activity.GovernorActivity;
+import com.governorapp.activity.SettingsActivity;
+import com.governorapp.activity.TempActivity;
 import com.governorapp.config.Configuration;
 import com.governorapp.server.Server;
 import com.governorapp.util.Utils;
@@ -62,6 +65,9 @@ public class ServerService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         startForeground(110, buildNotification());
         startHttpServer() ;
+
+
+
         return super.onStartCommand(intent, flags, startId);
     }
 
