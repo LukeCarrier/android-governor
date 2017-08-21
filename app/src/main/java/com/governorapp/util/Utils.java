@@ -3,6 +3,7 @@ package com.governorapp.util;
 import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.webkit.MimeTypeMap;
 
 import java.math.BigInteger;
 import java.net.InetAddress;
@@ -36,5 +37,14 @@ public class Utils {
         InetAddress address = InetAddress.getByAddress(ipByteArray);
 
         return address.getHostAddress();
+    }
+
+    public static String getMimeType(String url) {
+        String type = null;
+        String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+        if (extension != null) {
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        }
+        return type;
     }
 }

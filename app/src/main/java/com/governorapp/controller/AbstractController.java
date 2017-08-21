@@ -32,7 +32,7 @@ public abstract class AbstractController {
         this.config = config;
     }
 
-    abstract protected NanoHTTPD.Response doWork(NanoHTTPD.IHTTPSession session) ;
+    abstract public NanoHTTPD.Response doWork(NanoHTTPD.IHTTPSession session) ;
 
     /**
      * Return a successful response with data, but no errors.

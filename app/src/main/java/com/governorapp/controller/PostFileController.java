@@ -31,7 +31,7 @@ public class PostFileController extends AbstractController implements Controller
     }
 
     @Override
-    protected NanoHTTPD.Response doWork(NanoHTTPD.IHTTPSession session) {
+    public NanoHTTPD.Response doWork(NanoHTTPD.IHTTPSession session) {
         NanoHTTPD.Method method = session.getMethod();
 
         Map<String, String> files = new HashMap<>();

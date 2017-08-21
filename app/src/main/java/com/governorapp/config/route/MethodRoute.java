@@ -61,6 +61,7 @@ public class MethodRoute implements Route {
 
             Class<?> controllerClass = controllerPair.getCls();
             Controller controller = controllerPair.getController();
+            Method[] methods = controllerClass.getMethods() ;
 //            Method controllerMethod = controllerClass.getDeclaredMethod(method);
             Method controllerMethod = controllerClass.getDeclaredMethod("doWork", NanoHTTPD.IHTTPSession.class);
             return (NanoHTTPD.Response) controllerMethod.invoke(controller , session);

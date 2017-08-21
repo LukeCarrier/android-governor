@@ -1,6 +1,7 @@
 package com.governorapp.config;
 
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import com.governorapp.config.route.AssetRoute;
 import com.governorapp.config.route.DynamicMethodRoute;
@@ -183,6 +184,7 @@ public class Configuration {
             String routeController;
             String routeMethod;
             String routeVerb;
+            String isDynamic ;
             String routePathRegex;
 
             RouteParser routeParser;
@@ -194,9 +196,9 @@ public class Configuration {
                 routeController = routeNodeAttrs.getNamedItem("controller").getNodeValue();
                 routeMethod = routeNodeAttrs.getNamedItem("method").getNodeValue();
                 routeVerb = routeNodeAttrs.getNamedItem("verb").getNodeValue();
-
+                isDynamic = routeNodeAttrs.getNamedItem("isDynamic").getNodeValue();
                 routeParser = new RouteParser(routePath);
-                if (routeParser.isDynamic()) {
+                if (TextUtils.equals(isDynamic , "1")) {
                     routePathRegex = routeParser.getPathRegex();
 
                     addDynamicRoute(routePathRegex, new DynamicMethodRoute(routeController,

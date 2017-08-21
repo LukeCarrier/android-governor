@@ -35,7 +35,7 @@ public class OpenBrowserController extends AbstractController implements Control
     }
 
     @Override
-    protected NanoHTTPD.Response doWork(NanoHTTPD.IHTTPSession session) {
+    public NanoHTTPD.Response doWork(NanoHTTPD.IHTTPSession session) {
         NanoHTTPD.Method method = session.getMethod();
 
         Map<String, String> files = new HashMap<>();

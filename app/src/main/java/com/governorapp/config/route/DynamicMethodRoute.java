@@ -20,7 +20,6 @@ import fi.iki.elonen.NanoHTTPD;
 /**
  * Dynamic method route.
  */
-@Deprecated
 public class DynamicMethodRoute implements Route {
     /**
      * Controller name.

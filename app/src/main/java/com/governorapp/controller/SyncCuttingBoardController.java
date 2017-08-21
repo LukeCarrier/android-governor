@@ -29,7 +29,7 @@ public class SyncCuttingBoardController extends AbstractController implements Co
     }
 
     @Override
-    protected NanoHTTPD.Response doWork(NanoHTTPD.IHTTPSession session) {
+    public NanoHTTPD.Response doWork(NanoHTTPD.IHTTPSession session) {
 
         NanoHTTPD.Method method = session.getMethod();
 

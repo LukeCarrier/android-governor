@@ -74,6 +74,17 @@ public class StreamUtil {
             writer.write(new String(buf, 0, size));
         }
     }
+
+    public static String readStreams(InputStream is) throws IOException {
+        byte[] buf = new byte[BUF_SIZE] ;
+        int size = -1 ;
+        StringBuilder sb = new StringBuilder() ;
+        while ((size = is.read(buf)) != -1){
+            sb.append(new String(buf)) ;
+        }
+        return sb.toString() ;
+    }
+
     /**
      * Gets the stack trace as a {@link String}.
      *

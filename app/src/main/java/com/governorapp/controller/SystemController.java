@@ -26,7 +26,7 @@ public class SystemController extends AbstractController implements Controller {
     }
 
     @Override
-    protected NanoHTTPD.Response doWork(NanoHTTPD.IHTTPSession session) {
+    public NanoHTTPD.Response doWork(NanoHTTPD.IHTTPSession session) {
         try {
             return getBuild();
         } catch (NoSuchFieldException e) {

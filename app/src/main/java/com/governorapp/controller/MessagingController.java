@@ -37,7 +37,7 @@ public class MessagingController extends AbstractController implements Controlle
     }
 
     @Override
-    protected NanoHTTPD.Response doWork(NanoHTTPD.IHTTPSession session) {
+    public NanoHTTPD.Response doWork(NanoHTTPD.IHTTPSession session) {
         List<Message> threads = getMessagesList("") ;
         return this.respond(threads) ;
     }
