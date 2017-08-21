@@ -5,7 +5,12 @@ import android.content.Context;
 import com.governorapp.config.Configuration;
 import com.governorapp.config.Route;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import fi.iki.elonen.NanoHTTPD;
 
@@ -27,7 +32,6 @@ public class Server extends NanoHTTPD {
     public Response serve(IHTTPSession session) {
         String path = session.getUri();
         Response response;
-
         try {
             Route route = config.resolveRoute(path);
             response = route.getResponse(appContext, config, session);

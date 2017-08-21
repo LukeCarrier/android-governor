@@ -25,6 +25,18 @@ public class SystemController extends AbstractController implements Controller {
         super(appContext, config);
     }
 
+    @Override
+    public NanoHTTPD.Response doWork(NanoHTTPD.IHTTPSession session) {
+        try {
+            return getBuild();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null ;
+    }
+
     /**
      * Get device hardware and software build information.
      *

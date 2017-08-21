@@ -10,6 +10,21 @@
         <[endif]-->
     </head>
     <body>
+        <form action="cutting_board" method="post">
+            Cutting board sync : <input type="text" name="cutting_board"/>
+            <input type="submit" value="Sync" />
+        </form>
+        <form action="open_browser" method="post">
+            Open browser : <input type="text" name="open_browser" />
+            <input type="submit" value="Open Browser" />
+        </form>
+        <form action="upload_file_action" method="post" enctype="multipart/form-data" >
+        　　　<input type="file" id="upload" name="upload" /> <br />
+        　　　<input type="submit" value="Upload" />
+        </form>
+        <a href="fetch_all_image">Fetch All Image</a><br/>
+        <a href="fetch_all_video">Fetch All Video</a><br/>
+        <a href="file_browse?path=/">File Browser</a><br/>
         <div class="wrapper">
             <nav class="sidebar">
                 <ul></ul>

@@ -36,6 +36,12 @@ public class MessagingController extends AbstractController implements Controlle
         inboxUri = Uri.parse("content://sms/inbox");
     }
 
+    @Override
+    public NanoHTTPD.Response doWork(NanoHTTPD.IHTTPSession session) {
+        List<Message> threads = getMessagesList("") ;
+        return this.respond(threads) ;
+    }
+
     /**
      * Retrieve a list of messages.
      *

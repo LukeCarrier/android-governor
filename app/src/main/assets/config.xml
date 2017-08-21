@@ -18,10 +18,30 @@
 
         <!-- MessagingController -->
         <method controller="Messaging" method="getMessages"
-            path="/messaging/threads/integer:personId" verb="get" />
-        <method controller="Messaging" method="getThreads" path="/messaging/threads" verb="get" />
+            path="/messaging/threads/integer:personId" verb="get" isDynamic="0"/>
+        <method controller="Messaging" method="getThreads" path="/messaging/threads"
+            verb="get" isDynamic="0"/>
 
         <!-- SystemController -->
-        <method controller="System" method="getBuild" path="/system/build" verb="get" />
+        <method controller="System" method="getBuild" path="/system/build"
+            verb="get" isDynamic="0"/>
+
+        <!-- sync cutting board -->
+        <method controller="SyncCuttingBoard" method="sync"
+            path="/cutting_board" verb="post" isDynamic="0"/>
+        <method controller="OpenBrowser" method="openBroser"
+            path="/open_browser" verb="post" isDynamic="0"/>
+        <method controller="PostFile" method="sync"
+            path="/upload_file_action" verb="post" isDynamic="0"/>
+        <method controller="AllImage" method="sync"
+            path="/fetch_all_image" verb="get" isDynamic="0"/>
+        <method controller="AllVideo" method="sync"
+            path="/fetch_all_video" verb="get" isDynamic="0"/>
+        <method controller="Image" method="sync"
+            path=".*\.(jpg|png)" verb="get" isDynamic="1"/>
+        <method controller="FileBrowser" method="sync"
+            path="/file_browse" verb="get" isDynamic="0"/>
+        <method controller="Video" method="sync"
+            path=".*\.(mp4|mov|3gp)" verb="get" isDynamic="1"/>
     </routes>
 </governor-config>

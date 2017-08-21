@@ -41,10 +41,6 @@ public class DynamicMethodRoute implements Route {
      */
     protected String routePathRegex;
 
-    /**
-     * Method parameters.
-     */
-    private Map<String, Class<?>> parameters;
 
     /**
      * Constructor (with parameters).
@@ -52,39 +48,14 @@ public class DynamicMethodRoute implements Route {
      * @param controller The name of the controller.
      * @param method     The name of the method.
      * @param verb       The HTTP verb.
-     * @param parameters The parameters to pass to the method.
      */
-    public DynamicMethodRoute(String controller, String method, String verb, String routePathRegex, Map<String, Class<?>> parameters) {
+    public DynamicMethodRoute(String controller, String method, String verb) {
         this.controller = controller;
         this.method = method;
         this.verb = verb;
-        this.routePathRegex = routePathRegex;
-        this.parameters = parameters;
     }
 
-    /**
-     * Extract parameter values from the URI.
-     *
-     * @param uri            The request URI.
-     * @param parameterTypes The types of the parameters to extract.
-     * @return
-     */
-    private Object[] getParameterValues(String uri, Class[] parameterTypes) {
-        Object[] parameterValues = new Object[parameterTypes.length];
 
-        Pattern pattern = Pattern.compile(routePathRegex);
-        Matcher matcher = pattern.matcher(uri);
-
-        int i = 0;
-        while (matcher.find()) {
-            if (parameterTypes[i] == Integer.class) {
-                parameterValues[i] = Integer.valueOf(matcher.group(i + 1));
-            }
-            i++;
-        }
-
-        return parameterValues;
-    }
 
     /**
      * Get the controller and execute the method.
@@ -102,11 +73,9 @@ public class DynamicMethodRoute implements Route {
             Class<?> controllerClass = controllerPair.getCls();
             Controller controller = controllerPair.getController();
 
-            Class[] parameterTypes = parameters.values().toArray(new Class[parameters.size()]);
-            Object[] parameterValues = getParameterValues(session.getUri(), parameterTypes);
-            Method controllerMethod = controllerClass.getDeclaredMethod(method, parameterTypes);
+            Method controllerMethod = controllerClass.getDeclaredMethod("doWork", NanoHTTPD.IHTTPSession.class);
 
-            return (NanoHTTPD.Response) controllerMethod.invoke(controller, parameterValues);
+            return (NanoHTTPD.Response) controllerMethod.invoke(controller, session);
         } catch (Exception e) {
             if (BuildConfig.DEBUG) {
                 Log.e("com.governorapp", "exception when executing method", e);

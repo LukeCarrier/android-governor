@@ -3,6 +3,7 @@ package com.governorapp.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -17,9 +18,13 @@ import android.widget.TextView;
 import com.governorapp.R;
 import com.governorapp.config.Configuration;
 import com.governorapp.server.Server;
+import com.governorapp.service.ServerService;
+import com.governorapp.util.Constants;
+import com.governorapp.util.Utils;
 
 import org.w3c.dom.Document;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
@@ -59,12 +64,7 @@ public class GovernorActivity extends Activity {
      */
     protected Context appContext;
 
-    /**
-     * The NanoHttpd server.
-     * <p/>
-     * The HTTP server hosting the Governor application.
-     */
-    protected Server server;
+
 
     /**
      * Prepare activity state on creation.
@@ -75,11 +75,27 @@ public class GovernorActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        initDir() ;
+
         setContentView(R.layout.activity_governor);
 
         appContext = getApplicationContext();
         governor_address = (EditText) findViewById(R.id.governor_address);
         device_wifi_status = (TextView) findViewById(R.id.device_wifi_status);
+
+        ServerService.startServerService(this);
+
+
+    }
+
+    /**
+     * init upload diractionary
+     * */
+    private void initDir(){
+        File uploadFile = new File(Constants.UPLOAD_PATH) ;
+        if (!uploadFile.exists()){
+            uploadFile.mkdirs() ;
+        }
     }
 
     /**
@@ -90,31 +106,12 @@ public class GovernorActivity extends Activity {
         super.onResume();
 
         try {
-            Configuration config = new Configuration();
-
-            config.loadPreferences(PreferenceManager.getDefaultSharedPreferences(this));
-
-            InputStream configStream = getAssets().open("config.xml");
-            Document configXml = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(configStream);
-            config.loadXml(configXml);
-
-            try {
-                // This will screw on IPv6 (need to enclose IP with [])
-                governor_address.setText("http://" + getDeviceWifiAddress() + ":" + config.getPort());
-                device_wifi_status.setVisibility(View.GONE);
-            } catch (UnknownHostException e) {
-                device_wifi_status.setText(R.string.device_wifi_address_error);
-                device_wifi_status.setTextColor(getResources().getColor(R.color.error));
-            }
-
-            try {
-                server = new Server(appContext, config);
-                server.start();
-            } catch (IOException e) {
-                Log.e("com.governorapp", "exception when launching NanoHttpd", e);
-            }
-        } catch (Exception e) { // multi-catch only came in JRE 7 :(
-            Log.e("com.governorapp", "exception when parsing configuration", e);
+            // This will screw on IPv6 (need to enclose IP with [])
+            governor_address.setText("http://" + Utils.getDeviceWifiAddress(this) + ":8080");
+            device_wifi_status.setVisibility(View.GONE);
+        } catch (UnknownHostException e) {
+            device_wifi_status.setText(R.string.device_wifi_address_error);
+            device_wifi_status.setTextColor(getResources().getColor(R.color.error));
         }
     }
 
@@ -125,9 +122,7 @@ public class GovernorActivity extends Activity {
     protected void onPause() {
         super.onPause();
 
-        if (server != null) {
-            server.stop();
-        }
+
     }
 
     /**
@@ -161,27 +156,5 @@ public class GovernorActivity extends Activity {
         }
     }
 
-    /**
-     * Get a human readable representation of the device's WiFi address.
-     * <p/>
-     * Exists mainly because Java is stupid and requires us to actually care about endianness.
-     *
-     * @return A human readable IP address.
-     * @throws UnknownHostException
-     */
-    protected String getDeviceWifiAddress() throws UnknownHostException {
-        WifiManager wifiMgr = (WifiManager) getSystemService(WIFI_SERVICE);
-        WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
-        int ipAddress = wifiInfo.getIpAddress();
 
-        if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {
-            ipAddress = Integer.reverseBytes(ipAddress);
-        }
-
-        byte[] ipByteArray = BigInteger.valueOf(ipAddress).toByteArray();
-
-        InetAddress address = InetAddress.getByAddress(ipByteArray);
-
-        return address.getHostAddress();
-    }
 }

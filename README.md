@@ -1,12 +1,6 @@
 Governor
 ========
 
-<p align="center">
-    <img width="256" height="256" src="http://governorapp.com/assets/logo-dark.png">
-</p>
-
-Like AirDroid, but with freedomsauce.
-
 * * *
 
 No longer maintained
@@ -82,15 +76,11 @@ To do
 This is an ambitious list, and there's a chance that some of these actions will depend on the device
 being rooted. It'd be awesome if we could include all of this functionality, though:
 
-* HTTP server
-    * Move HTTP server out of activity and into a service
-    * Display a notification when the server is running
 * Device management
     * Camera/screenshotting
         * Take photo from front and back cameras
         * Take a screenshot/screencast
     * Clipboard
-        * Insert text into clipboard
         * Export contents from clipboard
     * File management
         * Browse, move and copy files
